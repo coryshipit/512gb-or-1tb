@@ -1,0 +1,26 @@
+# 文档目录（独立的私有仓库）
+docs/
+
+# 依赖
+node_modules/
+
+# 构建产物
+dist/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 环境变量
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 上传临时目录
+.uploads/
