@@ -1,0 +1,94 @@
+{
+  "data": [
+    {
+      "id": "page-s0-empty",
+      "title": "空状态 — 选择场景",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1783942620000,
+      "canvasData": {
+        "x": 0,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/s0-empty.html",
+        "interactions": [
+          {
+            "domId": "cta-select-scenario",
+            "targetPageId": "page-s1-selected"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-s1-selected",
+      "title": "场景已选 — 系统预测",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1783942620000,
+      "canvasData": {
+        "x": 620,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/s1-selected.html",
+        "interactions": [
+          {
+            "domId": "cta-start-refine",
+            "targetPageId": "page-s2-refining"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-s2-refining",
+      "title": "用户细化 — 调整配置",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1783942620000,
+      "canvasData": {
+        "x": 1240,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/s2-refining.html",
+        "interactions": [
+          {
+            "domId": "cta-view-results",
+            "targetPageId": "page-s3-results"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-s3-results",
+      "title": "查看结果 — 容量建议",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1783942620000,
+      "canvasData": {
+        "x": 1860,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/s3-results.html",
+        "interactions": [
+          {
+            "domId": "back-refine",
+            "targetPageId": "page-s2-refining",
+            "hideEdge": true
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "autoLayout": true,
+    "deviceType": "desktop",
+    "projectName": "512GB还是1TB — 低保真原型"
+  }
+}

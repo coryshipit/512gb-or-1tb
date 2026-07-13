@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>空状态 — 选择场景</title>
+    <style id="theme-vars">
+/* ============================================
+   512GB or 1TB — Brand CSS (Dark Mode)
+   Prefix: storage
+   ============================================ */
+
+:root {
+  /* --- Background Layers (5-tier) --- */
+  --storage-bg-base: #0b1326;
+  --storage-bg-elevated: #171f33;
+  --storage-bg-surface: #1e2740;
+  --storage-bg-overlay: #2d3449;
+
+  /* --- Text Layers (3-tier) --- */
+  --storage-text-primary: #dae2fd;
+  --storage-text-secondary: #a0a8c0;
+  --storage-text-tertiary: #8d90a0;
+
+  /* --- Brand Primary (single hue) --- */
+  --storage-primary: #b4c5ff;
+  --storage-primary-action: #2563eb;
+  --storage-primary-hover: #1d4ed8;
+  --storage-primary-subtle: rgba(180, 197, 255, 0.08);
+
+  /* --- Border --- */
+  --storage-border: #2a3450;
+  --storage-border-hover: #3d4868;
+  --storage-border-active: #4a5a8a;
+
+  /* --- Status Colors (semantic only) --- */
+  --state-critical: #ef4444;
+  --state-critical-bg: rgba(239, 68, 68, 0.1);
+  --state-manageable: #f59e0b;
+  --state-manageable-bg: rgba(245, 158, 11, 0.1);
+  --state-comfortable: #3b82f6;
+  --state-comfortable-bg: rgba(59, 130, 246, 0.1);
+  --state-abundant: #22c55e;
+  --state-abundant-bg: rgba(34, 197, 94, 0.1);
+
+  /* --- Radius Scale --- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* --- Typography --- */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* --- Spacing --- */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* --- Max Width --- */
+  --storage-max-width: 1200px;
+}
+
+/* ============================================
+   Typography Classes
+   ============================================ */
+
+.storage-h1 {
+  font-family: var(--font-sans);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--storage-text-primary);
+}
+
+.storage-h2 {
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--storage-text-primary);
+}
+
+.storage-h3 {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--storage-text-primary);
+}
+
+.storage-body {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--storage-text-secondary);
+}
+
+.storage-caption {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--storage-text-tertiary);
+}
+
+.storage-mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--storage-text-primary);
+}
+
+.storage-mono-lg {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--storage-text-primary);
+}
+
+/* ============================================
+   Component Utility Classes
+   ============================================ */
+
+.storage-card {
+  background-color: var(--storage-bg-elevated);
+  border: 1px solid var(--storage-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.storage-card-surface {
+  background-color: var(--storage-bg-surface);
+  border: 1px solid var(--storage-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+
+.storage-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 10px 20px;
+  background-color: var(--storage-primary-action);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.storage-btn-primary:hover {
+  background-color: var(--storage-primary-hover);
+}
+
+.storage-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 10px 20px;
+  background-color: transparent;
+  color: var(--storage-text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid var(--storage-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.storage-btn-secondary:hover {
+  border-color: var(--storage-border-hover);
+}
+
+.storage-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--storage-border);
+  color: var(--storage-text-secondary);
+}
+
+.storage-tag-active {
+  border-color: var(--storage-primary);
+  color: var(--storage-primary);
+  background-color: var(--storage-primary-subtle);
+}
+
+.storage-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+}
+
+.storage-badge-critical {
+  background-color: var(--state-critical-bg);
+  color: var(--state-critical);
+}
+
+.storage-badge-manageable {
+  background-color: var(--state-manageable-bg);
+  color: var(--state-manageable);
+}
+
+.storage-badge-comfortable {
+  background-color: var(--state-comfortable-bg);
+  color: var(--state-comfortable);
+}
+
+.storage-badge-abundant {
+  background-color: var(--state-abundant-bg);
+  color: var(--state-abundant);
+}
+
+.storage-input {
+  width: 100%;
+  padding: 8px 12px;
+  background-color: var(--storage-bg-surface);
+  border: 1px solid var(--storage-border);
+  border-radius: var(--radius-md);
+  color: var(--storage-text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.storage-input:focus {
+  border-color: var(--storage-primary-action);
+}
+
+.storage-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--storage-text-primary);
+  cursor: pointer;
+}
+
+.storage-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--storage-primary-action);
+}
+
+.storage-divider {
+  height: 1px;
+  background-color: var(--storage-border);
+  border: none;
+  margin: var(--space-md) 0;
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-primary: var(--storage-primary);
+    --color-border: var(--storage-border);
+  }
+  @layer base {
+    body { background: var(--storage-bg-base); color: var(--storage-text-primary); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+    <!-- ===== Header Bar (sticky, full-width, z-50) ===== -->
+    <header class="sticky top-0 z-50 h-14" style="background-color: var(--storage-bg-elevated); border-bottom: 1px solid var(--storage-border);">
+      <div class="mx-auto flex h-full max-w-[1200px] items-center justify-between px-6">
+        <!-- Logo: JetBrains Mono, 1rem, 600, brand primary -->
+        <span style="font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--storage-primary); white-space: nowrap;">512GB or 1TB</span>
+        <!-- Right side: language toggle + GitHub link -->
+        <div class="flex items-center gap-4">
+          <!-- Language toggle: 中 active / EN inactive -->
+          <span class="text-sm whitespace-nowrap">
+            <span class="lang-btn" style="color: var(--storage-text-primary); cursor: pointer;">中</span>
+            <span style="color: var(--storage-text-tertiary);"> / </span>
+            <span class="lang-btn" style="color: var(--storage-text-tertiary); cursor: pointer;">EN</span>
+          </span>
+          <!-- GitHub link -->
+          <a href="#" class="github-link inline-flex items-center gap-1 text-sm whitespace-nowrap" style="color: var(--storage-text-tertiary); text-decoration: none;">
+            <i data-lucide="github" style="width: 16px; height: 16px;"></i>
+            <span>GitHub</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===== Hero Section ===== -->
+    <section class="mx-auto max-w-[1200px] text-center" style="padding: 48px 24px 32px;">
+      <h1 class="storage-h1" style="text-wrap: balance; word-break: keep-all; overflow-wrap: break-word;">
+        512GB 还是 1TB？
+      </h1>
+      <p class="storage-body" style="margin-top: 8px;">选择使用场景，估算存储需求，做出购买决策</p>
+    </section>
+
+    <!-- ===== Main Content Area (Dual-Column Grid 55% / 45%) ===== -->
+    <main class="mx-auto max-w-[1200px] px-6">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-[55fr_45fr]">
+        <!-- Left column: scenario selector + config panel -->
+        <div id="left-column" class="left-column" style="min-height: 400px;">
+          <!-- Section Header: 已选场景 -->
+          <div style="margin-bottom: 16px;">
+            <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); margin: 0 0 4px 0;">已选场景</p>
+            <h2 style="font-family: var(--font-sans); font-size: 1.25rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">Web开发</h2>
+          </div>
+
+          <!-- Scenario Cards Grid (2x3 Bento) — Web开发 selected, others dimmed -->
+          <div class="grid grid-cols-2 gap-3" style="margin-bottom: 20px;">
+            <!-- Card 1: Web开发 (selected) -->
+            <div class="scenario-card flex flex-col gap-2 p-5" style="border: 1px solid var(--storage-primary); background-color: var(--storage-primary-subtle);">
+              <i data-lucide="code-2" style="width: 24px; height: 24px; color: var(--storage-primary);"></i>
+              <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">Web开发</h3>
+              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">网站、Web应用、后端服务</p>
+            </div>
+            <!-- Card 2: 移动应用开发 (dimmed) -->
+            <div class="scenario-card flex flex-col gap-2 p-5" style="opacity: 0.45;">
+              <i data-lucide="smartphone" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
+              <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">移动应用开发</h3>
+              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">iOS / Android 应用</p>
+            </div>
+            <!-- Card 3: 桌面应用开发 (dimmed) -->
+            <div class="scenario-card flex flex-col gap-2 p-5" style="opacity: 0.45;">
+              <i data-lucide="monitor" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
+              <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">桌面应用开发</h3>
+              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">Tauri/Electron 桌面应用</p>
+            </div>
+            <!-- Card 4: 设计师 (dimmed) -->
+            <div class="scenario-card flex flex-col gap-2 p-5" style="opacity: 0.45;">
+              <i data-lucide="palette" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
+              <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">设计师</h3>
+              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">UI / 产品设计</p>
+            </div>
+            <!-- Card 5: 游戏开发 (dimmed) -->
+            <div class="scenario-card flex flex-col gap-2 p-5" style="opacity: 0.45;">
+              <i data-lucide="gamepad-2" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
+              <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">游戏开发</h3>
+              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">Unity / Unreal 游戏</p>
+            </div>
+            <!-- Card 6: 自媒体运营 (dimmed) -->
+            <div class="scenario-card flex flex-col gap-2 p-5" style="opacity: 0.45;">
+              <i data-lucide="video" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
+              <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">自媒体运营</h3>
+              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">视频剪辑、设计、AI内容</p>
+            </div>
+          </div>
+
+          <!-- Config Panel -->
+          <div class="storage-card" style="display: flex; flex-direction: column; gap: 16px;">
+
+            <!-- 1. 容量选择 -->
+            <div>
+              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); margin: 0 0 8px 0;">容量选择</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="storage-tag whitespace-nowrap">256GB</span>
+                <span class="storage-tag storage-tag-active whitespace-nowrap">512GB <span style="color: var(--state-manageable);">★</span></span>
+                <span class="storage-tag whitespace-nowrap" style="border-color: rgba(245,158,11,0.45); color: var(--state-manageable); background-color: var(--state-manageable-bg);">1TB ★</span>
+                <span class="storage-tag whitespace-nowrap">2TB</span>
+              </div>
+            </div>
+
+            <hr class="storage-divider" style="margin: 0;">
+
+            <!-- 2. 操作系统 -->
+            <div>
+              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); margin: 0 0 8px 0;">操作系统</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="storage-tag storage-tag-active whitespace-nowrap">macOS</span>
+                <span class="storage-tag whitespace-nowrap">Windows</span>
+                <span class="storage-tag whitespace-nowrap">Linux</span>
+              </div>
+            </div>
+
+            <hr class="storage-divider" style="margin: 0;">
+
+            <!-- 3. 开发工具 -->
+            <div>
+              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); margin: 0 0 10px 0;">开发工具</p>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <!-- 编辑器 -->
+                <div>
+                  <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); margin: 0 0 6px 0;">编辑器</p>
+                  <label class="storage-checkbox-label whitespace-nowrap"><input type="checkbox" class="storage-checkbox" checked> VS Code <span class="storage-mono" style="color: var(--storage-text-tertiary); font-size: 0.75rem;">[2GB]</span></label>
+                </div>
+                <!-- 版本控制 -->
+                <div>
+                  <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); margin: 0 0 6px 0;">版本控制</p>
+                  <div class="flex flex-wrap gap-x-5 gap-y-2">
+                    <label class="storage-checkbox-label whitespace-nowrap"><input type="checkbox" class="storage-checkbox" checked> Git <span class="storage-mono" style="color: var(--storage-text-tertiary); font-size: 0.75rem;">[1GB]</span></label>
+                    <label class="storage-checkbox-label whitespace-nowrap"><input type="checkbox" class="storage-checkbox" checked> GitHub Desktop <span class="storage-mono" style="color: var(--storage-text-tertiary); font-size: 0.75rem;">[1GB]</span></label>
+                  </div>
+                </div>
+                <!-- 运行时 -->
+                <div>
+                  <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); margin: 0 0 6px 0;">运行时</p>
+                  <div class="flex flex-wrap gap-x-5 gap-y-2">
+                    <label class="storage-checkbox-label whitespace-nowrap"><input type="checkbox" class="storage-checkbox" checked> Node.js <span class="storage-mono" style="color: var(--storage-text-tertiary); font-size: 0.75rem;">[15GB]</span></label>
+                    <label class="storage-checkbox-label whitespace-nowrap"><input type="checkbox" class="storage-checkbox" checked> Python <span class="storage-mono" style="color: var(--storage-text-tertiary); font-size: 0.75rem;">[10GB]</span></label>
+                  </div>
+                </div>
+                <!-- 设计 -->
+                <div>
+                  <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); margin: 0 0 6px 0;">设计</p>
+                  <div class="flex flex-wrap gap-x-5 gap-y-2">
+                    <label class="storage-checkbox-label whitespace-nowrap"><input type="checkbox" class="storage-checkbox" checked> Figma <span class="storage-mono" style="color: var(--storage-text-tertiary); font-size: 0.75rem;">[2GB]</span></label>
+                    <label class="storage-checkbox-label whitespace-nowrap" style="padding: 2px 8px; border: 1px solid rgba(245,158,11,0.4); border-radius: var(--radius-md); background-color: var(--state-manageable-bg);"><input type="checkbox" class="storage-checkbox" checked> Design Assets <span class="storage-mono" style="color: var(--storage-text-tertiary); font-size: 0.75rem;">[50GB]</span> <span style="font-size: 0.625rem; font-weight: 600; color: var(--state-manageable); padding: 1px 5px; border-radius: var(--radius-sm); background-color: rgba(245,158,11,0.18);">新增</span></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="storage-divider" style="margin: 0;">
+
+            <!-- 4. AI Tools -->
+            <div>
+              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); margin: 0 0 8px 0;">AI Tools</p>
+              <label class="storage-checkbox-label whitespace-nowrap"><input type="checkbox" class="storage-checkbox" checked> Cursor <span class="storage-mono" style="color: var(--storage-text-tertiary); font-size: 0.75rem;">[3GB]</span></label>
+            </div>
+
+            <hr class="storage-divider" style="margin: 0;">
+
+            <!-- 5. 目标平台 -->
+            <div>
+              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); margin: 0 0 8px 0;">目标平台</p>
+              <label class="storage-checkbox-label whitespace-nowrap"><input type="checkbox" class="storage-checkbox" checked> Web <span class="storage-mono" style="color: var(--storage-text-tertiary); font-size: 0.75rem;">[0GB]</span></label>
+            </div>
+
+            <hr class="storage-divider" style="margin: 0;">
+
+            <!-- 6. 运行环境 -->
+            <div>
+              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); margin: 0 0 6px 0;">运行环境</p>
+              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); margin: 0 0 10px 0; line-height: 1.5;">以下为可选配置。如果你不确定是否需要，通常可以跳过。</p>
+              <div class="flex flex-wrap gap-x-5 gap-y-2">
+                <label class="storage-checkbox-label whitespace-nowrap" style="padding: 2px 8px; border: 1px solid rgba(245,158,11,0.4); border-radius: var(--radius-md); background-color: var(--state-manageable-bg);"><input type="checkbox" class="storage-checkbox" checked> Docker <span class="storage-mono" style="color: var(--storage-text-tertiary); font-size: 0.75rem;">[50GB]</span> <span style="font-size: 0.625rem; font-weight: 600; color: var(--state-manageable); padding: 1px 5px; border-radius: var(--radius-sm); background-color: rgba(245,158,11,0.18);">新增</span></label>
+                <label class="storage-checkbox-label whitespace-nowrap" style="padding: 2px 8px; border: 1px solid rgba(245,158,11,0.4); border-radius: var(--radius-md); background-color: var(--state-manageable-bg);"><input type="checkbox" class="storage-checkbox" checked> Windows VM <span class="storage-mono" style="color: var(--storage-text-tertiary); font-size: 0.75rem;">[120GB]</span> <span style="font-size: 0.625rem; font-weight: 600; color: var(--state-manageable); padding: 1px 5px; border-radius: var(--radius-sm); background-color: rgba(245,158,11,0.18);">新增</span></label>
+                <label class="storage-checkbox-label whitespace-nowrap"><input type="checkbox" class="storage-checkbox"> Linux VM <span class="storage-mono" style="color: var(--storage-text-tertiary); font-size: 0.75rem;">[50GB]</span></label>
+                <label class="storage-checkbox-label whitespace-nowrap"><input type="checkbox" class="storage-checkbox"> Dual Boot <span class="storage-mono" style="color: var(--storage-text-tertiary); font-size: 0.75rem;">[150GB]</span></label>
+              </div>
+            </div>
+
+            <hr class="storage-divider" style="margin: 0;">
+
+            <!-- 7. 项目数量 -->
+            <div>
+              <div class="flex items-center justify-between" style="margin-bottom: 8px;">
+                <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); margin: 0;">项目数量</p>
+                <span class="storage-mono" style="font-size: 0.875rem; color: var(--storage-text-primary);">25 个</span>
+              </div>
+              <input type="range" min="1" max="50" value="25" style="width: 100%; accent-color: var(--storage-primary-action); cursor: pointer;">
+              <div class="flex justify-between" style="margin-top: 4px;">
+                <span style="font-size: 0.6875rem; color: var(--storage-text-tertiary);">1</span>
+                <span style="font-size: 0.6875rem; color: var(--storage-text-tertiary);">50</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Inline prompt (amber) -->
+          <div style="margin-top: 12px; background-color: var(--state-manageable-bg); border-left: 3px solid var(--state-manageable); border-radius: var(--radius-sm); padding: 8px 12px;">
+            <p style="font-size: 0.75rem; color: var(--state-manageable); margin: 0; line-height: 1.5;">Docker + Windows VM + 多项目组合下，512GB 剩余空间紧张</p>
+          </div>
+
+          <!-- CTA button -->
+          <div style="margin-top: 16px;">
+            <button data-dom-id="cta-view-results" class="storage-btn-primary">
+              <span>查看完整结果</span>
+              <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right column: quick recommend bar + result card -->
+        <div id="right-column" class="right-column" style="min-height: 400px; display: flex; flex-direction: column; gap: 16px;">
+
+          <!-- Quick Recommend Bar (amber) -->
+          <div style="display: flex; align-items: center; gap: 8px; background-color: var(--state-manageable-bg); border: 1px solid rgba(245,158,11,0.3); border-radius: var(--radius-md); padding: 10px 14px;">
+            <span style="width: 8px; height: 8px; border-radius: var(--radius-full); background-color: var(--state-manageable); flex-shrink: 0;"></span>
+            <span style="font-family: var(--font-mono); font-size: 0.875rem; font-weight: 500; color: var(--state-manageable);">建议升级至 1TB ★</span>
+          </div>
+
+          <!-- Result Card -->
+          <div class="storage-card" style="display: flex; flex-direction: column; gap: 20px;">
+
+            <!-- 容量显示 -->
+            <div>
+              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); margin: 0 0 4px 0;">总容量</p>
+              <p class="storage-mono-lg" style="margin: 0;">512 GB</p>
+            </div>
+
+            <hr class="storage-divider" style="margin: 0;">
+
+            <!-- 占用数据 -->
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div class="flex items-center justify-between">
+                <span style="font-size: 0.8125rem; color: var(--storage-text-secondary);">预计占用</span>
+                <span class="storage-mono">454 GB</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span style="font-size: 0.8125rem; color: var(--storage-text-secondary);">预计剩余</span>
+                <span class="storage-mono" style="color: var(--state-manageable);">58 GB</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span style="font-size: 0.8125rem; color: var(--storage-text-secondary);">剩余比例</span>
+                <span class="storage-mono" style="color: var(--state-manageable);">11%</span>
+              </div>
+            </div>
+
+            <hr class="storage-divider" style="margin: 0;">
+
+            <!-- 状态徽章 -->
+            <div class="flex items-center justify-between">
+              <span style="font-size: 0.8125rem; color: var(--storage-text-secondary);">状态</span>
+              <span class="storage-badge storage-badge-manageable">可用但需管理</span>
+            </div>
+
+            <!-- 进度条 -->
+            <div>
+              <div style="width: 100%; height: 10px; background-color: var(--storage-bg-surface); border-radius: var(--radius-full); overflow: hidden;">
+                <div style="width: 89%; height: 100%; background-color: var(--state-manageable); border-radius: var(--radius-full);"></div>
+              </div>
+              <div class="flex justify-between" style="margin-top: 8px;">
+                <span class="storage-mono" style="font-size: 0.75rem; color: var(--storage-text-secondary);">454GB 已用</span>
+                <span class="storage-mono" style="font-size: 0.75rem; color: var(--state-manageable);">58GB 剩余</span>
+              </div>
+            </div>
+
+            <hr class="storage-divider" style="margin: 0;">
+
+            <!-- 购买建议 -->
+            <div>
+              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); margin: 0 0 6px 0;">购买建议</p>
+              <p class="storage-body" style="margin: 0;">当前配置下 512GB 空间紧张，建议升级至 1TB 以获得更舒适的存储空间。</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ===== Footer ===== -->
+    <footer class="mt-12" style="border-top: 1px solid var(--storage-border);">
+      <div class="mx-auto max-w-[1200px] p-6 text-center">
+        <p class="storage-caption">纯本地计算，不收集数据 · 数据更新: 2026-07</p>
+      </div>
+    </footer>
+
+    <!-- ===== Google Fonts: Inter + JetBrains Mono ===== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+    <!-- ===== Custom Styles (free-explore: placed in body, not head) ===== -->
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: var(--font-sans);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      /* Language toggle hover feedback */
+      .lang-btn { transition: color 0.15s ease; }
+      .lang-btn:hover { color: var(--storage-text-secondary); }
+      /* GitHub link hover feedback */
+      .github-link { transition: color 0.15s ease; }
+      .github-link:hover { color: var(--storage-text-secondary); }
+      /* Scenario card base + hover + focus */
+      .scenario-card {
+        background-color: var(--storage-bg-elevated);
+        border: 1px solid var(--storage-border);
+        border-radius: var(--radius-lg);
+        transition: border-color 0.15s ease;
+      }
+      .scenario-card:hover {
+        border-color: var(--storage-border-hover);
+      }
+      .scenario-card:focus-visible {
+        outline: 2px solid var(--storage-primary);
+        outline-offset: 2px;
+      }
+      /* Reduced motion: downgrade all transitions */
+      @media (prefers-reduced-motion: reduce) {
+        * { transition-duration: 0.01ms !important; }
+      }
+    </style>
+
+    <!-- ===== Lucide Icons Init ===== -->
+    <script>lucide.createIcons();</script>
+</body>
+</html>
