@@ -376,10 +376,9 @@
 
     <!-- ===== Hero Section (FULL — S0 landing state) ===== -->
     <section class="mx-auto max-w-[800px] text-center" style="padding: 48px 24px 32px;">
-      <h1 class="storage-h1" style="text-wrap: balance; word-break: keep-all; overflow-wrap: break-word;">
-        512GB 还是 1TB？
+      <h1 style="font-family: var(--font-sans); font-size: 1.5rem; font-weight: 700; color: var(--storage-text-primary); margin: 0 0 8px 0; text-wrap: balance; word-break: keep-all; overflow-wrap: break-word;">
+        选择使用场景，估算存储需求，做出购买决策
       </h1>
-      <p class="storage-body" style="margin-top: 8px;">选择使用场景，估算存储需求，做出购买决策</p>
     </section>
 
     <!-- ===== Main Content Area (Single Column) ===== -->
@@ -395,8 +394,8 @@
 
         <!-- ===== Scenario Cards Grid (3x2 on desktop) ===== -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-          <!-- Card 1: Web开发 (navigation target -> S1) -->
-          <div data-dom-id="cta-select-scenario" class="scenario-card" role="button" tabindex="0" aria-label="选择场景：Web开发">
+          <!-- Card 1: Web开发 (pre-selected for demo) -->
+          <div class="scenario-card scenario-card-selected" role="button" tabindex="0" aria-label="选择场景：Web开发">
             <i data-lucide="code-2" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
             <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">Web开发</h3>
             <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">网站、Web应用、后端服务</p>
@@ -433,11 +432,10 @@
           </div>
         </div>
 
-        <!-- ===== Guidance Text (below grid) ===== -->
-        <div style="margin-top: 32px; text-align: center;">
-          <i data-lucide="hard-drive" style="display: block; width: 32px; height: 32px; color: var(--storage-text-tertiary); margin: 0 auto 8px;"></i>
-          <p style="font-size: 0.875rem; color: var(--storage-text-tertiary); margin: 0;">选择场景后查看容量估算</p>
-        </div>
+        <!-- ===== CTA Button (below grid) ===== -->
+        <button data-dom-id="cta-select-scenario" class="cta-estimate-btn cta-estimate-active" type="button">
+          开始估算
+        </button>
       </div>
     </main>
 
@@ -481,6 +479,39 @@
       }
       .scenario-card:hover { border-color: var(--storage-border-hover); }
       .scenario-card:focus-visible { outline: 2px solid var(--storage-primary); outline-offset: 2px; }
+      /* Scenario card selected state (blue border + subtle blue tint) */
+      .scenario-card-selected {
+        border-color: var(--storage-primary, #2563eb);
+        background-color: rgba(37, 99, 235, 0.08);
+      }
+      .scenario-card-selected:hover { border-color: var(--storage-primary, #2563eb); }
+      /* CTA estimate button */
+      .cta-estimate-btn {
+        display: block;
+        width: 100%;
+        padding: 14px 32px;
+        font-family: var(--font-sans);
+        font-size: 0.95rem;
+        font-weight: 600;
+        border-radius: var(--radius-md);
+        margin-top: 32px;
+        transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+      }
+      .cta-estimate-active {
+        background-color: #2563eb;
+        color: var(--storage-text-primary);
+        border: none;
+        cursor: pointer;
+      }
+      .cta-estimate-active:hover {
+        background-color: var(--storage-primary-hover);
+      }
+      .cta-estimate-disabled {
+        background-color: var(--storage-bg-surface);
+        color: var(--storage-text-tertiary);
+        cursor: not-allowed;
+        border: 1px solid var(--storage-border);
+      }
       /* Reduced motion: downgrade all transitions */
       @media (prefers-reduced-motion: reduce) {
         * { transition-duration: 0.01ms !important; }
@@ -489,5 +520,38 @@
 
     <!-- ===== Lucide Icons Init ===== -->
     <script>lucide.createIcons();</script>
+
+    <!-- ===== Scenario Card Selection Toggle (vanilla JS) ===== -->
+    <script>
+      (function() {
+        var cards = document.querySelectorAll('.scenario-card');
+        var ctaBtn = document.querySelector('[data-dom-id="cta-select-scenario"]');
+
+        function updateCtaState() {
+          var anySelected = document.querySelector('.scenario-card-selected') !== null;
+          if (anySelected) {
+            ctaBtn.classList.add('cta-estimate-active');
+            ctaBtn.classList.remove('cta-estimate-disabled');
+          } else {
+            ctaBtn.classList.remove('cta-estimate-active');
+            ctaBtn.classList.add('cta-estimate-disabled');
+          }
+        }
+
+        cards.forEach(function(card) {
+          card.addEventListener('click', function() {
+            card.classList.toggle('scenario-card-selected');
+            updateCtaState();
+          });
+          card.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              card.classList.toggle('scenario-card-selected');
+              updateCtaState();
+            }
+          });
+        });
+      })();
+    </script>
 </body>
 </html>
