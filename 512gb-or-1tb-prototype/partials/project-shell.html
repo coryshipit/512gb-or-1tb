@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>512GB 还是 1TB？</title>
+    <title>512GB还是1TB</title>
     <style id="theme-vars">
 /* ============================================
    512GB or 1TB — Brand CSS (Dark Mode)
@@ -304,9 +304,9 @@
     </style>
 </head>
 <body>
-    <!-- ===== Header Bar (sticky, full-width, z-50) ===== -->
+    <!-- ===== Header Bar (sticky, full-width, z-50, 800px inner) ===== -->
     <header class="sticky top-0 z-50 h-14" style="background-color: var(--storage-bg-elevated); border-bottom: 1px solid var(--storage-border);">
-      <div class="mx-auto flex h-full max-w-[1200px] items-center justify-between px-6">
+      <div class="mx-auto flex h-full max-w-[800px] items-center justify-between px-6">
         <!-- Logo: JetBrains Mono, 1rem, 600, brand primary -->
         <span style="font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--storage-primary); white-space: nowrap;">512GB or 1TB</span>
         <!-- Right side: language toggle + GitHub link -->
@@ -326,34 +326,24 @@
       </div>
     </header>
 
-    <!-- ===== Hero Section ===== -->
-    <section class="mx-auto max-w-[1200px] text-center" style="padding: 48px 24px 32px;">
+    <!-- ===== Hero Section (FULL — S0 landing state) ===== -->
+    <section class="mx-auto max-w-[800px] text-center" style="padding: 48px 24px 32px;">
       <h1 class="storage-h1" style="text-wrap: balance; word-break: keep-all; overflow-wrap: break-word;">
-        <!-- SLOT: pageTitle — leaf pages may override the page title -->
         512GB 还是 1TB？
       </h1>
       <p class="storage-body" style="margin-top: 8px;">选择使用场景，估算存储需求，做出购买决策</p>
     </section>
 
-    <!-- ===== Main Content Area (Dual-Column Grid 55% / 45%) ===== -->
-    <main class="mx-auto max-w-[1200px] px-6">
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-[55fr_45fr]">
-        <!-- Left column: scenario selector + config panel (injected by leaf pages) -->
-        <div id="left-column" class="left-column" style="min-height: 400px;">
-          <!-- SLOT: leftColumnContent — leaf pages inject scenario selector + config panel here -->
-        </div>
-        <!-- Right column: result card + quick recommend (injected by leaf pages) -->
-        <div id="right-column" class="right-column" style="min-height: 400px;">
-          <!-- SLOT: rightColumnContent — leaf pages inject result card + quick recommend here -->
-        </div>
+    <!-- ===== Main Content Area (Single Column) ===== -->
+    <main class="mx-auto max-w-[800px] px-6" style="padding-bottom: 48px;">
+      <div id="main-content" style="min-height: 400px;">
+        <!-- SLOT: mainContent — leaf pages inject all content here -->
       </div>
     </main>
 
     <!-- ===== Footer ===== -->
-    <footer class="mt-12" style="border-top: 1px solid var(--storage-border);">
-      <div class="mx-auto max-w-[1200px] p-6 text-center">
-        <p class="storage-caption">纯本地计算，不收集数据 · 数据更新: 2026-07</p>
-      </div>
+    <footer style="border-top: 1px solid var(--storage-border); padding: 24px; text-align: center;">
+      <p class="storage-caption" style="max-width: 800px; margin: 0 auto;">纯本地计算，不收集数据 · 数据更新: 2026-07</p>
     </footer>
 
     <!-- ===== Google Fonts: Inter + JetBrains Mono ===== -->
@@ -364,6 +354,7 @@
     <!-- ===== Custom Styles (free-explore: placed in body, not head) ===== -->
     <style>
       * { box-sizing: border-box; }
+      html { background-color: var(--storage-bg-base); }
       body {
         margin: 0;
         font-family: var(--font-sans);

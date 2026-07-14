@@ -56,6 +56,16 @@
 
   /* --- Max Width --- */
   --storage-max-width: 1200px;
+
+  /* --- Semantic Aliases (for fill-html-head.mjs compatibility) --- */
+  --storage-background: var(--storage-bg-base);
+  --storage-foreground: var(--storage-text-primary);
+  --storage-card: var(--storage-bg-elevated);
+  --storage-muted: var(--storage-bg-surface);
+  --storage-muted-foreground: var(--storage-text-secondary);
+  --storage-radius-sm: var(--radius-sm);
+  --storage-radius-md: var(--radius-md);
+  --storage-radius-lg: var(--radius-lg);
 }
 
 /* ============================================

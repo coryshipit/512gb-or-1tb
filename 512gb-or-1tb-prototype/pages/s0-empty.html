@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>空状态 — 选择场景</title>
+    <title>512GB 还是 1TB？</title>
     <style id="theme-vars">
 /* ============================================
    512GB or 1TB — Brand CSS (Dark Mode)
@@ -63,6 +63,16 @@
 
   /* --- Max Width --- */
   --storage-max-width: 1200px;
+
+  /* --- Semantic Aliases (for fill-html-head.mjs compatibility) --- */
+  --storage-background: var(--storage-bg-base);
+  --storage-foreground: var(--storage-text-primary);
+  --storage-card: var(--storage-bg-elevated);
+  --storage-muted: var(--storage-bg-surface);
+  --storage-muted-foreground: var(--storage-text-secondary);
+  --storage-radius-sm: var(--radius-sm);
+  --storage-radius-md: var(--radius-md);
+  --storage-radius-lg: var(--radius-lg);
 }
 
 /* ============================================
@@ -277,14 +287,52 @@
     <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
     <style type="text/tailwindcss">
   @theme inline {
+    --color-background: var(--storage-background);
+    --color-foreground: var(--storage-foreground);
+    --color-card: var(--storage-card);
     --color-primary: var(--storage-primary);
+    --color-muted: var(--storage-muted);
+    --color-muted-foreground: var(--storage-muted-foreground);
     --color-border: var(--storage-border);
+    --radius-sm: var(--storage-radius-sm);
+    --radius-md: var(--storage-radius-md);
+    --radius-lg: var(--storage-radius-lg);
   }
   @layer base {
-    body { background: var(--storage-bg-base); color: var(--storage-text-primary); }
+    body { background: var(--storage-background); color: var(--storage-foreground); }
     td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
     th { @apply whitespace-nowrap; }
   }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-background { background-color: var(--storage-background); }
+      .text-background { color: var(--storage-background); }
+      .border-background { border-color: var(--storage-background); }
+      .ring-background { --tw-ring-color: var(--storage-background); }
+      .bg-foreground { background-color: var(--storage-foreground); }
+      .text-foreground { color: var(--storage-foreground); }
+      .border-foreground { border-color: var(--storage-foreground); }
+      .ring-foreground { --tw-ring-color: var(--storage-foreground); }
+      .bg-card { background-color: var(--storage-card); }
+      .text-card { color: var(--storage-card); }
+      .border-card { border-color: var(--storage-card); }
+      .ring-card { --tw-ring-color: var(--storage-card); }
+      .bg-primary { background-color: var(--storage-primary); }
+      .text-primary { color: var(--storage-primary); }
+      .border-primary { border-color: var(--storage-primary); }
+      .ring-primary { --tw-ring-color: var(--storage-primary); }
+      .bg-muted { background-color: var(--storage-muted); }
+      .text-muted { color: var(--storage-muted); }
+      .border-muted { border-color: var(--storage-muted); }
+      .ring-muted { --tw-ring-color: var(--storage-muted); }
+      .bg-muted-foreground { background-color: var(--storage-muted-foreground); }
+      .text-muted-foreground { color: var(--storage-muted-foreground); }
+      .border-muted-foreground { border-color: var(--storage-muted-foreground); }
+      .ring-muted-foreground { --tw-ring-color: var(--storage-muted-foreground); }
+      .bg-border { background-color: var(--storage-border); }
+      .text-border { color: var(--storage-border); }
+      .border-border { border-color: var(--storage-border); }
+      .ring-border { --tw-ring-color: var(--storage-border); }
     </style>
     <style>
       .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -304,9 +352,9 @@
     </style>
 </head>
 <body>
-    <!-- ===== Header Bar (sticky, full-width, z-50) ===== -->
+    <!-- ===== Header Bar (sticky, full-width, z-50, 800px inner) ===== -->
     <header class="sticky top-0 z-50 h-14" style="background-color: var(--storage-bg-elevated); border-bottom: 1px solid var(--storage-border);">
-      <div class="mx-auto flex h-full max-w-[1200px] items-center justify-between px-6">
+      <div class="mx-auto flex h-full max-w-[800px] items-center justify-between px-6">
         <!-- Logo: JetBrains Mono, 1rem, 600, brand primary -->
         <span style="font-family: var(--font-mono); font-size: 1rem; font-weight: 600; color: var(--storage-primary); white-space: nowrap;">512GB or 1TB</span>
         <!-- Right side: language toggle + GitHub link -->
@@ -326,82 +374,76 @@
       </div>
     </header>
 
-    <!-- ===== Hero Section ===== -->
-    <section class="mx-auto max-w-[1200px] text-center" style="padding: 48px 24px 32px;">
+    <!-- ===== Hero Section (FULL — S0 landing state) ===== -->
+    <section class="mx-auto max-w-[800px] text-center" style="padding: 48px 24px 32px;">
       <h1 class="storage-h1" style="text-wrap: balance; word-break: keep-all; overflow-wrap: break-word;">
         512GB 还是 1TB？
       </h1>
       <p class="storage-body" style="margin-top: 8px;">选择使用场景，估算存储需求，做出购买决策</p>
     </section>
 
-    <!-- ===== Main Content Area (Dual-Column Grid 55% / 45%) ===== -->
-    <main class="mx-auto max-w-[1200px] px-6">
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-[55fr_45fr]">
-        <!-- Left column: scenario selector -->
-        <div id="left-column" class="left-column" style="min-height: 400px;">
-          <!-- Section Header -->
-          <div style="margin-bottom: 20px;">
-            <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); margin: 0 0 4px 0;">第一步 · 选择使用场景</p>
-            <h2 style="font-family: var(--font-sans); font-size: 1.25rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">你最常做哪种开发？</h2>
-          </div>
+    <!-- ===== Main Content Area (Single Column) ===== -->
+    <main class="mx-auto max-w-[800px] px-6" style="padding-bottom: 48px;">
+      <div id="main-content" style="min-height: 400px;">
+        <!-- SLOT: mainContent — leaf pages inject all content here -->
 
-          <!-- Scenario Cards Grid (2x3 Bento) -->
-          <div class="grid grid-cols-2 gap-3">
-            <!-- Card 1: Web开发 (navigation target -> S1) -->
-            <div data-dom-id="cta-select-scenario" class="scenario-card flex flex-col gap-2 p-5 cursor-pointer" role="button" tabindex="0" aria-label="选择场景：Web开发">
-              <i data-lucide="code-2" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
-              <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">Web开发</h3>
-              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">网站、Web应用、后端服务</p>
-            </div>
-            <!-- Card 2: 移动应用开发 -->
-            <div class="scenario-card flex flex-col gap-2 p-5 cursor-pointer" role="button" tabindex="0" aria-label="选择场景：移动应用开发">
-              <i data-lucide="smartphone" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
-              <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">移动应用开发</h3>
-              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">iOS / Android 应用</p>
-            </div>
-            <!-- Card 3: 桌面应用开发 -->
-            <div class="scenario-card flex flex-col gap-2 p-5 cursor-pointer" role="button" tabindex="0" aria-label="选择场景：桌面应用开发">
-              <i data-lucide="monitor" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
-              <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">桌面应用开发</h3>
-              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">Tauri/Electron 桌面应用</p>
-            </div>
-            <!-- Card 4: 设计师 -->
-            <div class="scenario-card flex flex-col gap-2 p-5 cursor-pointer" role="button" tabindex="0" aria-label="选择场景：设计师">
-              <i data-lucide="palette" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
-              <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">设计师</h3>
-              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">UI / 产品设计</p>
-            </div>
-            <!-- Card 5: 游戏开发 -->
-            <div class="scenario-card flex flex-col gap-2 p-5 cursor-pointer" role="button" tabindex="0" aria-label="选择场景：游戏开发">
-              <i data-lucide="gamepad-2" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
-              <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">游戏开发</h3>
-              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">Unity / Unreal 游戏</p>
-            </div>
-            <!-- Card 6: 自媒体运营 -->
-            <div class="scenario-card flex flex-col gap-2 p-5 cursor-pointer" role="button" tabindex="0" aria-label="选择场景：自媒体运营">
-              <i data-lucide="video" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
-              <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">自媒体运营</h3>
-              <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">视频剪辑、设计、AI内容</p>
-            </div>
+        <!-- ===== Section Header ===== -->
+        <div>
+          <h2 style="font-family: var(--font-sans); font-size: 1.25rem; font-weight: 600; color: var(--storage-text-primary); margin: 0 0 8px 0;">你最常做哪种开发？</h2>
+          <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); font-style: italic; margin: 0 0 20px 0;">可多选，系统将合并所有场景的配置</p>
+        </div>
+
+        <!-- ===== Scenario Cards Grid (3x2 on desktop) ===== -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+          <!-- Card 1: Web开发 (navigation target -> S1) -->
+          <div data-dom-id="cta-select-scenario" class="scenario-card" role="button" tabindex="0" aria-label="选择场景：Web开发">
+            <i data-lucide="code-2" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
+            <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">Web开发</h3>
+            <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">网站、Web应用、后端服务</p>
+          </div>
+          <!-- Card 2: 移动应用开发 -->
+          <div class="scenario-card" role="button" tabindex="0" aria-label="选择场景：移动应用开发">
+            <i data-lucide="smartphone" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
+            <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">移动应用开发</h3>
+            <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">iOS / Android 应用</p>
+          </div>
+          <!-- Card 3: 桌面应用开发 -->
+          <div class="scenario-card" role="button" tabindex="0" aria-label="选择场景：桌面应用开发">
+            <i data-lucide="monitor" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
+            <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">桌面应用开发</h3>
+            <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">Tauri/Electron 桌面应用</p>
+          </div>
+          <!-- Card 4: 设计师 -->
+          <div class="scenario-card" role="button" tabindex="0" aria-label="选择场景：设计师">
+            <i data-lucide="palette" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
+            <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">设计师</h3>
+            <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">UI / 产品设计</p>
+          </div>
+          <!-- Card 5: 游戏开发 -->
+          <div class="scenario-card" role="button" tabindex="0" aria-label="选择场景：游戏开发">
+            <i data-lucide="gamepad-2" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
+            <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">游戏开发</h3>
+            <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">Unity / Unreal 游戏</p>
+          </div>
+          <!-- Card 6: 自媒体运营 -->
+          <div class="scenario-card" role="button" tabindex="0" aria-label="选择场景：自媒体运营">
+            <i data-lucide="video" style="width: 24px; height: 24px; color: var(--storage-text-secondary);"></i>
+            <h3 style="font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--storage-text-primary); margin: 0;">自媒体运营</h3>
+            <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); line-height: 1.4; margin: 0;">视频剪辑、设计、AI内容</p>
           </div>
         </div>
 
-        <!-- Right column: placeholder card -->
-        <div id="right-column" class="right-column" style="min-height: 400px;">
-          <div class="flex flex-col items-center justify-center" style="min-height: 400px; background-color: var(--storage-bg-elevated); border: 2px dashed var(--storage-border); border-radius: var(--radius-lg);">
-            <i data-lucide="hard-drive" style="width: 48px; height: 48px; color: var(--storage-text-tertiary); margin-bottom: 16px;"></i>
-            <p style="font-size: 0.875rem; color: var(--storage-text-tertiary); text-align: center; margin: 0;">选择场景后查看容量估算</p>
-            <p style="font-size: 0.75rem; color: var(--storage-text-tertiary); text-align: center; margin: 4px 0 0 0; opacity: 0.7;">系统将自动预测你的配置</p>
-          </div>
+        <!-- ===== Guidance Text (below grid) ===== -->
+        <div style="margin-top: 32px; text-align: center;">
+          <i data-lucide="hard-drive" style="display: block; width: 32px; height: 32px; color: var(--storage-text-tertiary); margin: 0 auto 8px;"></i>
+          <p style="font-size: 0.875rem; color: var(--storage-text-tertiary); margin: 0;">选择场景后查看容量估算</p>
         </div>
       </div>
     </main>
 
     <!-- ===== Footer ===== -->
-    <footer class="mt-12" style="border-top: 1px solid var(--storage-border);">
-      <div class="mx-auto max-w-[1200px] p-6 text-center">
-        <p class="storage-caption">纯本地计算，不收集数据 · 数据更新: 2026-07</p>
-      </div>
+    <footer style="border-top: 1px solid var(--storage-border); padding: 24px; text-align: center;">
+      <p class="storage-caption" style="max-width: 800px; margin: 0 auto;">纯本地计算，不收集数据 · 数据更新: 2026-07</p>
     </footer>
 
     <!-- ===== Google Fonts: Inter + JetBrains Mono ===== -->
@@ -412,6 +454,7 @@
     <!-- ===== Custom Styles (free-explore: placed in body, not head) ===== -->
     <style>
       * { box-sizing: border-box; }
+      html { background-color: var(--storage-bg-base); }
       body {
         margin: 0;
         font-family: var(--font-sans);
@@ -424,20 +467,20 @@
       /* GitHub link hover feedback */
       .github-link { transition: color 0.15s ease; }
       .github-link:hover { color: var(--storage-text-secondary); }
-      /* Scenario card base + hover + focus */
+      /* Scenario card: interactive entry surface (hover border step + focus ring) */
       .scenario-card {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 20px;
         background-color: var(--storage-bg-elevated);
         border: 1px solid var(--storage-border);
         border-radius: var(--radius-lg);
+        cursor: pointer;
         transition: border-color 0.15s ease;
       }
-      .scenario-card:hover {
-        border-color: var(--storage-border-hover);
-      }
-      .scenario-card:focus-visible {
-        outline: 2px solid var(--storage-primary);
-        outline-offset: 2px;
-      }
+      .scenario-card:hover { border-color: var(--storage-border-hover); }
+      .scenario-card:focus-visible { outline: 2px solid var(--storage-primary); outline-offset: 2px; }
       /* Reduced motion: downgrade all transitions */
       @media (prefers-reduced-motion: reduce) {
         * { transition-duration: 0.01ms !important; }

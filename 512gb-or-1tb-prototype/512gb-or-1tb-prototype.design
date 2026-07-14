@@ -4,7 +4,7 @@
       "id": "page-s0-empty",
       "title": "空状态 — 选择场景",
       "type": "page",
-      "version": 1,
+      "version": 2,
       "createdAt": 1783942620000,
       "canvasData": {
         "x": 0,
@@ -16,16 +16,16 @@
         "interactions": [
           {
             "domId": "cta-select-scenario",
-            "targetPageId": "page-s1-selected"
+            "targetPageId": "page-s1-config"
           }
         ]
       }
     },
     {
-      "id": "page-s1-selected",
-      "title": "场景已选 — 系统预测",
+      "id": "page-s1-config",
+      "title": "配置态 — 调整配置",
       "type": "page",
-      "version": 1,
+      "version": 2,
       "createdAt": 1783942620000,
       "canvasData": {
         "x": 620,
@@ -33,28 +33,7 @@
         "group": 0
       },
       "devMetadata": {
-        "htmlSrc": "pages/s1-selected.html",
-        "interactions": [
-          {
-            "domId": "cta-start-refine",
-            "targetPageId": "page-s2-refining"
-          }
-        ]
-      }
-    },
-    {
-      "id": "page-s2-refining",
-      "title": "用户细化 — 调整配置",
-      "type": "page",
-      "version": 1,
-      "createdAt": 1783942620000,
-      "canvasData": {
-        "x": 1240,
-        "y": 0,
-        "group": 0
-      },
-      "devMetadata": {
-        "htmlSrc": "pages/s2-refining.html",
+        "htmlSrc": "pages/s1-config.html",
         "interactions": [
           {
             "domId": "cta-view-results",
@@ -65,12 +44,12 @@
     },
     {
       "id": "page-s3-results",
-      "title": "查看结果 — 容量建议",
+      "title": "结果态 — 容量建议",
       "type": "page",
-      "version": 1,
+      "version": 2,
       "createdAt": 1783942620000,
       "canvasData": {
-        "x": 1860,
+        "x": 1236,
         "y": 0,
         "group": 0
       },
@@ -79,7 +58,7 @@
         "interactions": [
           {
             "domId": "back-refine",
-            "targetPageId": "page-s2-refining",
+            "targetPageId": "page-s1-config",
             "hideEdge": true
           }
         ]
@@ -87,7 +66,7 @@
     }
   ],
   "config": {
-    "autoLayout": true,
+    "autoLayout": false,
     "deviceType": "desktop",
     "projectName": "512GB还是1TB — 低保真原型"
   }
