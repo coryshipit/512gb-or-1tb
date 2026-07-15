@@ -1,0 +1,114 @@
+/* ═══════════════════════════════════════════════════════════════
+   components.css — Design System Component Definitions
+   Auto-extracted from preview/component-*.html
+   DO NOT EDIT MANUALLY — regenerate via extract-components-css.mjs
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Badge ─────────────────────────────────────────────────── */
+/* @anatomy
+   <div class="compare-row"> <div class="badge-cell" data-evidence-sample="critical"> <span class="storage-badge storage-badge-critical">紧张</span> <span class="range">剩余 &lt; 10%</span> </div>
+*/
+/* Component definitions — extracted to components.css by deterministic script */
+  .storage-badge { display: inline-flex; align-items: center; padding: 2px 10px; font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600; border-radius: var(--radius-full); white-space: nowrap; line-height: 1.4; }
+  .storage-badge-critical { background-color: var(--color-state-critical-bg); color: var(--color-state-critical); }
+  .storage-badge-manageable { background-color: var(--color-state-manageable-bg); color: var(--color-state-manageable); }
+  .storage-badge-comfortable { background-color: var(--color-state-comfortable-bg); color: var(--color-state-comfortable); }
+  .storage-badge-abundant { background-color: var(--color-state-abundant-bg); color: var(--color-state-abundant); }
+
+/* ── Button ────────────────────────────────────────────────── */
+/* @anatomy
+   <div class="section"> <h3 class="section-label">Primary</h3> <div class="btn-row"> <button class="btn btn-primary">开始估算</button>
+*/
+/* Component definitions — extracted to components.css by deterministic script */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); border: none; cursor: pointer; font-family: var(--font-sans); white-space: nowrap; transition: background-color 0.15s ease, border-color 0.15s ease; }
+.btn-primary { padding: 14px 32px; background: var(--color-primary-action); color: #ffffff; font-size: 0.95rem; font-weight: 600; border-radius: var(--radius-md); }
+.btn-primary:hover { background: var(--color-primary-hover); }
+.btn-secondary { padding: 10px 20px; background: transparent; color: var(--color-text-primary); font-size: 0.875rem; font-weight: 500; border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+.btn-secondary:hover { border-color: var(--color-border-hover); }
+.btn-cap { padding: 8px 16px; font-size: 0.875rem; font-weight: 500; border-radius: var(--radius-md); }
+.btn-cap-default { background: var(--color-bg-surface); color: var(--color-text-primary); border: 1px solid var(--color-border); }
+.btn-cap-default:hover { border-color: var(--color-border-hover); }
+.btn-cap-selected { background: var(--color-primary-action); color: #ffffff; border: 1px solid var(--color-primary-action); }
+.btn-cap-selected:hover { background: var(--color-primary-hover); }
+.btn-cap-recommended { background: transparent; color: var(--color-text-primary); border: 1px solid var(--color-state-manageable); }
+.btn-cap-recommended:hover { background: var(--color-state-manageable-bg); }
+.star { color: var(--color-state-manageable); }
+
+/* ── Card ──────────────────────────────────────────────────── */
+/* @anatomy
+   <div class="section-label">Scenario Card</div> <div class="scenario-grid"> <div class="scenario-card"> <svg class="icon"><use href="#icon-code"/></svg> <div class="title">Web 开发</div> <div class="desc">前端、后端、全栈开发</div> </div> <div class="scenario-card is-selected"> <svg class="icon"><use href="#icon-code"/></svg> <div class="title">Web 开发</div> <div class="desc">前端、后端、全栈开发</div> </div> <div cla...
+*/
+/* Component definitions — extracted to components.css */
+.scenario-card { display: flex; flex-direction: column; gap: var(--space-sm); padding: 20px; background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: var(--radius-lg); cursor: pointer; transition: border-color 0.15s ease, background-color 0.15s ease; }
+.scenario-card:hover { border-color: var(--color-border-hover); }
+.scenario-card.is-selected { border-color: var(--color-primary-action); background: var(--color-primary-subtle); }
+.scenario-card .icon { width: 32px; height: 32px; color: var(--color-primary); flex-shrink: 0; }
+.scenario-card .title { font-size: var(--font-size-h3); font-weight: var(--font-weight-h3); line-height: var(--line-height-h3); color: var(--color-text-primary); }
+.scenario-card .desc { font-size: var(--font-size-body); line-height: var(--line-height-body); color: var(--color-text-secondary); }
+
+.config-card { padding: var(--space-lg); background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: var(--radius-lg); }
+.config-card .config-heading { font-size: var(--font-size-h3); font-weight: var(--font-weight-h3); line-height: var(--line-height-h3); color: var(--color-text-primary); margin: 0 0 var(--space-md); }
+.config-card .field { display: flex; flex-direction: column; gap: var(--space-sm); margin-bottom: var(--space-md); }
+.config-card .field-label { font-size: var(--font-size-caption); color: var(--color-text-secondary); }
+
+.result-card { padding: var(--space-lg); background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: var(--radius-lg); }
+.result-card .result-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-md); }
+.result-card .scenario-label { font-size: var(--font-size-body); color: var(--color-text-secondary); }
+.result-card .capacity { font-family: var(--font-mono); font-size: var(--font-size-mono-lg); font-weight: var(--font-weight-mono-lg); color: var(--color-text-primary); margin-bottom: var(--space-sm); }
+.result-card .progress-track { width: 100%; height: var(--size-progress-bar-height); background: var(--color-bg-surface); border-radius: var(--radius-sm); overflow: hidden; margin: var(--space-md) 0; }
+.result-card .progress-fill { height: 100%; width: 72%; background: var(--color-state-comfortable); border-radius: var(--radius-sm); }
+.result-card .advice { font-size: var(--font-size-body); line-height: var(--line-height-body); color: var(--color-text-secondary); }
+
+.estimation-note { padding: var(--space-md); background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+.estimation-note .note-text { font-size: var(--font-size-caption); line-height: var(--line-height-caption); color: var(--color-text-tertiary); }
+
+/* ── Form Control ──────────────────────────────────────────── */
+/* @anatomy
+   <div class="section-label">Checkbox</div> <div class="config-card"> <div class="config-card-title">选择开发工具</div> <div class="checkbox-group"> <label class="fc-checkbox-label"><input type="checkbox" class="fc-checkbox" checked> VS Code<span class="fc-size-annotation">[2GB]</span></label> <label class="fc-checkbox-label"><input type="checkbox" class="fc-checkbox" checked> Git<span class="fc-size-a...
+*/
+/* Component definitions — extracted to components.css by deterministic script */
+  .fc-checkbox-label { display: inline-flex; align-items: center; gap: var(--space-sm); font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-text-primary); cursor: pointer; }
+  .fc-checkbox { width: 16px; height: 16px; accent-color: var(--color-primary-action); flex-shrink: 0; margin: 0; cursor: pointer; }
+  .fc-size-annotation { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-tertiary); margin-left: var(--space-xs); }
+  .fc-new-tag { display: inline-flex; align-items: center; margin-left: var(--space-xs); padding: 1px 8px; font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600; border-radius: var(--radius-full); background: var(--color-primary-subtle); color: var(--color-primary); border: 1px solid var(--color-primary); line-height: 1.4; }
+  .fc-range-row { display: flex; align-items: center; gap: var(--space-md); max-width: 500px; }
+  .fc-range-label { font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-text-primary); white-space: nowrap; flex-shrink: 0; }
+  .fc-range-slider { flex: 1; -webkit-appearance: none; appearance: none; height: 6px; background: var(--color-bg-surface); border-radius: var(--radius-full); outline: none; cursor: pointer; margin: 0; }
+  .fc-range-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: var(--radius-full); background: var(--color-primary-action); cursor: pointer; border: none; }
+  .fc-range-slider::-webkit-slider-thumb:focus { box-shadow: 0 0 0 4px var(--color-primary-subtle); }
+  .fc-range-slider::-moz-range-thumb { width: 16px; height: 16px; border-radius: var(--radius-full); background: var(--color-primary-action); cursor: pointer; border: none; }
+  .fc-range-slider::-moz-range-thumb:focus { box-shadow: 0 0 0 4px var(--color-primary-subtle); }
+  .fc-range-count { font-family: var(--font-mono); font-size: 0.875rem; color: var(--color-text-primary); min-width: 48px; text-align: right; flex-shrink: 0; }
+  .fc-input { width: 100%; padding: 8px 12px; background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); color: var(--color-text-primary); font-family: var(--font-sans); font-size: 0.875rem; outline: none; transition: border-color 0.15s ease; box-sizing: border-box; }
+  .fc-input::placeholder { color: var(--color-text-tertiary); }
+  .fc-input:focus { border-color: var(--color-primary-action); }
+
+/* ── Progress Bar ──────────────────────────────────────────── */
+/* @anatomy
+   <div class="section"> <div class="section-label">Segmented Bar</div>
+*/
+/* Component definitions — extracted to components.css by deterministic script */
+  .seg-bar { display: flex; height: var(--size-progress-bar-height); background: var(--color-bg-surface); border-radius: var(--radius-md); overflow: hidden; }
+  .seg-bar > span { min-width: 2px; height: 100%; }
+  .mini-bar { display: flex; align-items: center; gap: var(--space-sm); }
+  .mini-bar .bar { flex: 1; height: 12px; background: var(--color-bg-surface); border-radius: var(--radius-full); overflow: hidden; }
+  .mini-bar .bar .fill { height: 100%; background: var(--color-state-manageable); border-radius: var(--radius-full); }
+  .mini-bar .pct { font-family: var(--font-mono); font-size: 0.8125rem; font-weight: var(--font-weight-mono-lg); color: var(--color-state-manageable); white-space: nowrap; }
+  .legend { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm) var(--space-md); }
+  .legend-row { display: flex; align-items: center; gap: var(--space-sm); }
+  .legend-dot { width: 8px; height: 8px; border-radius: var(--radius-full); flex-shrink: 0; }
+  .legend-label { font-size: 0.75rem; color: var(--color-text-secondary); white-space: nowrap; }
+  .legend-val { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-tertiary); margin-left: auto; white-space: nowrap; }
+
+/* ── Tag ───────────────────────────────────────────────────── */
+/* @anatomy
+   <span class="storage-tag">Web开发</span> <span class="storage-tag">游戏开发</span> <span class="storage-tag">自媒体运营</span>
+*/
+/* Component definitions — extracted to components.css by deterministic script */
+.storage-tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; min-width: 28px; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; line-height: 1.4; border-radius: var(--radius-full); border: 1px solid var(--color-border); color: var(--color-text-secondary); background: transparent; white-space: nowrap; transition: border-color .15s ease, filter .15s ease; }
+.storage-tag:hover { border-color: var(--color-border-active); }
+.storage-tag-active { border-color: var(--color-primary); color: var(--color-primary); background-color: var(--color-primary-subtle); }
+.storage-tag-active:hover { filter: brightness(1.08); }
+.storage-tag .check-icon { width: 12px; height: 12px; flex-shrink: 0; }
+.new-tag { display: inline-flex; align-items: center; padding: 1px 6px; min-width: 28px; font-family: var(--font-sans); font-size: 0.6875rem; font-weight: 600; line-height: 1.4; border-radius: var(--radius-full); background-color: var(--color-state-manageable-bg); color: var(--color-state-manageable); white-space: nowrap; }
+.storage-checkbox-label .new-tag { margin-left: 4px; }

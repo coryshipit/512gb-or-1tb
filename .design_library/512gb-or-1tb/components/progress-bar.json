@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 2,
+  "sourceKind": "structured-spec",
+  "slug": "progress-bar",
+  "name": "Progress Bar",
+  "confidence": "high",
+  "semanticTypeCandidates": ["data-visualization", "indicator"],
+  "variantDimensions": [
+    { "name": "variant", "values": ["segmented", "mini", "legend"] },
+    { "name": "size", "values": ["desktop", "mobile"] }
+  ],
+  "representativeVariants": [
+    { "variant": "segmented", "desc": "8-segment bar showing storage breakdown, S3 result area height 32px (Direction B data visualization hero)", "tokens": ["--color-bg-overlay", "--radius-md", "--storage-seg-system", "--storage-seg-tools", "--storage-seg-ai", "--storage-seg-platform", "--storage-seg-env", "--storage-seg-project", "--storage-seg-redundant", "--storage-seg-remaining"] },
+    { "variant": "mini", "desc": "Compact bar with HD icon + percentage, S1 config state, height 16px (Direction B more prominent)", "tokens": ["--color-bg-overlay", "--radius-full", "--size-progress-bar-mini"] },
+    { "variant": "legend", "desc": "2-column grid of color dot + label + GB value", "tokens": [] }
+  ],
+  "anatomy": {
+    "segmented": {
+      "root": "div[display:flex, height:32px]",
+      "background": "--color-bg-overlay (base, remaining segment shows through)",
+      "radius": "--size-progress-bar-radius (9999px, Direction C full rounded)",
+      "segments": "8 flex items with flex-basis percentage, min-width 2px",
+      "segmentColors": ["var(--storage-seg-system)", "var(--storage-seg-tools)", "var(--storage-seg-ai)", "var(--storage-seg-platform)", "var(--storage-seg-env)", "var(--storage-seg-project)", "var(--storage-seg-redundant)", "var(--storage-seg-remaining)"],
+      "legend": "grid 2-col, gap 6px 16px, 8px dot + label + mono GB value"
+    },
+    "mini": {
+      "root": "div.flex.items-center",
+      "icon": "SVG hard drive icon, 20x20, --color-text-secondary",
+      "bar": "flex:1, height:16px (--size-progress-bar-mini), --color-bg-overlay base, --radius-full",
+      "fill": "width percentage, --color-state-* (matches current status)",
+      "percentage": "mono font, 0.8125rem, 600 weight, --color-state-*"
+    }
+  },
+  "structurePatterns": [
+    "Segmented: remaining segment is transparent (base color shows through), not colored green",
+    "Segmented: each segment has title attribute for tooltip (e.g. title=\"系统 75GB\")",
+    "Mini: layout is [icon 20px][bar flex:1][percentage text], non-sticky",
+    "Legend: dots are 8px round, labels are 0.75rem secondary, values are 0.75rem mono tertiary"
+  ],
+  "usageHints": [
+    "Segmented bar: S3 result card only, height 32px desktop (--size-progress-bar-result, Direction B) / 20px mobile",
+    "Mini bar: S1 config state only, height 16px (--size-progress-bar-mini, Direction B), positioned before scenario/config module",
+    "Remaining segment: always transparent, per Apple/Windows storage visualization convention",
+    "Progress bar fill color follows status: critical=red, manageable=amber, comfortable=blue, abundant=green",
+    "In high-fidelity: segmented bar height may increase to 24-32px (Direction B data visualization weight)"
+  ],
+  "doNotInvent": [
+    "No animated progress bar fills (deferred to high-fidelity decision)",
+    "No gradient segments",
+    "No shadow on progress bar"
+  ],
+  "unknowns": []
+}

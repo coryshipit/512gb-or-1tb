@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 2,
+  "sourceKind": "structured-spec",
+  "slug": "badge",
+  "name": "Badge",
+  "confidence": "high",
+  "semanticTypeCandidates": ["status", "indicator"],
+  "variantDimensions": [
+    { "name": "variant", "values": ["critical", "manageable", "comfortable", "abundant"] },
+    { "name": "state", "values": ["default"] }
+  ],
+  "representativeVariants": [
+    { "variant": "critical", "desc": "Red bg tint, red text — 紧张 status (remaining < 10%)", "tokens": ["--color-state-critical", "--color-state-critical-bg"] },
+    { "variant": "manageable", "desc": "Amber bg tint, amber text — 可用但需管理 (10%-20%)", "tokens": ["--color-state-manageable", "--color-state-manageable-bg"] },
+    { "variant": "comfortable", "desc": "Blue bg tint, blue text — 舒适 (20%-40%)", "tokens": ["--color-state-comfortable", "--color-state-comfortable-bg"] },
+    { "variant": "abundant", "desc": "Green bg tint, green text — 充裕 (> 40%)", "tokens": ["--color-state-abundant", "--color-state-abundant-bg"] }
+  ],
+  "anatomy": {
+    "root": "span.storage-badge.storage-badge-{variant}",
+    "fontFamily": "--font-sans",
+    "fontSize": "0.75rem",
+    "fontWeight": "600",
+    "padding": "2px 10px",
+    "radius": "--radius-full (9999px)"
+  },
+  "structurePatterns": [
+    "Inline-flex, centered",
+    "Background uses rgba tint (10% opacity) of status color",
+    "Text color matches status color at full opacity"
+  ],
+  "usageHints": [
+    "Used in result card to show storage status level",
+    "Status colors are semantic only — never used as decoration",
+    "Badge color must match the progress bar state color and mini result bar color",
+    "In S1 config state, badge is not shown (mini result bar provides feedback)"
+  ],
+  "doNotInvent": [
+    "No neutral/default badge variant",
+    "No badge with icons",
+    "No badge shadows"
+  ],
+  "unknowns": []
+}

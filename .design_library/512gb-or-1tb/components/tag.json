@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 2,
+  "sourceKind": "structured-spec",
+  "slug": "tag",
+  "name": "Tag",
+  "confidence": "high",
+  "semanticTypeCandidates": ["label", "indicator", "filter"],
+  "variantDimensions": [
+    { "name": "variant", "values": ["default", "active", "new"] },
+    { "name": "state", "values": ["default"] }
+  ],
+  "representativeVariants": [
+    { "variant": "default", "desc": "Mono font pill, border outline, secondary text color", "tokens": ["--color-border", "--color-text-secondary", "--radius-full"] },
+    { "variant": "active", "desc": "Primary border, primary text, subtle primary bg", "tokens": ["--color-primary", "--color-primary-subtle"] },
+    { "variant": "new", "desc": "Amber bg, amber text, small badge for new items", "tokens": ["--color-state-manageable", "--color-state-manageable-bg"] }
+  ],
+  "anatomy": {
+    "root": "span.storage-tag | span.storage-tag-active | span.new-tag",
+    "fontFamily": "--font-mono (storage-tag) | --font-sans (new-tag)",
+    "fontSize": "0.75rem (storage-tag) | 0.6875rem (new-tag)",
+    "fontWeight": "500 (storage-tag) | 600 (new-tag)",
+    "padding": "2px 10px (storage-tag) | 1px 6px (new-tag)",
+    "radius": "--radius-full (9999px)"
+  },
+  "structurePatterns": [
+    "Inline-flex, centered, gap 4px",
+    "May contain icon (12px) + text",
+    "new-tag: appended after checkbox label, margin-left 4px"
+  ],
+  "usageHints": [
+    "storage-tag: scenario labels in collapsed scenario module",
+    "storage-tag-active: selected scenario indicator with check icon",
+    "new-tag: marks user-added items (Design Assets, Docker, Windows VM)",
+    "Tags use mono font for technical label aesthetic"
+  ],
+  "doNotInvent": [
+    "No removable/closable tags (not in product scope)",
+    "No tag shadows",
+    "No gradient tags"
+  ],
+  "unknowns": []
+}

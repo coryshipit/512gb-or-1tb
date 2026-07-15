@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Progress Bar Component</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+<style>
+  /* Page scaffold — NOT extracted */
+  body { margin: 0; padding: var(--space-xl); background: var(--color-bg-base); font-family: var(--font-sans); color: var(--color-text-primary); }
+  .page-title { font-size: var(--font-size-h2); font-weight: var(--font-weight-h2); line-height: var(--line-height-h2); margin: 0 0 var(--space-lg) 0; color: var(--color-text-primary); }
+  .section { margin-bottom: var(--space-xl); }
+  .section-label { font-size: var(--font-size-caption); font-weight: var(--font-weight-h3); letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: var(--space-md); }
+
+  /* @component-css-start */
+  /* Component definitions — extracted to components.css by deterministic script */
+  .seg-bar { display: flex; height: var(--size-progress-bar-result); width: 100%; background: var(--color-bg-surface); border-radius: var(--size-progress-bar-radius); overflow: hidden; }
+  .seg-bar > span { min-width: 2px; height: 100%; }
+  .seg-system { background: var(--storage-seg-system); }
+  .seg-tools { background: var(--storage-seg-tools); }
+  .seg-ai { background: var(--storage-seg-ai); }
+  .seg-platform { background: var(--storage-seg-platform); }
+  .seg-env { background: var(--storage-seg-env); }
+  .seg-project { background: var(--storage-seg-project); }
+  .seg-redundant { background: var(--storage-seg-redundant); }
+  .seg-remaining { background: var(--storage-seg-remaining); }
+  .mini-row { display: flex; align-items: center; gap: var(--space-sm); width: 100%; }
+  .mini-icon { width: 20px; height: 20px; color: var(--color-text-secondary); display: inline-block; flex-shrink: 0; }
+  .mini-bar { flex: 1; min-width: 0; height: var(--size-progress-bar-mini); background: var(--color-bg-surface); border-radius: var(--radius-full); overflow: hidden; }
+  .mini-fill { height: 100%; background: var(--color-state-manageable); border-radius: var(--radius-full); }
+  .mini-pct { font-family: var(--font-mono); font-size: 0.8125rem; font-weight: var(--font-weight-mono-lg); color: var(--color-state-manageable); white-space: nowrap; flex-shrink: 0; }
+  .legend { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm) var(--space-lg); }
+  .legend-item { display: flex; align-items: center; gap: var(--space-sm); min-width: 0; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; box-sizing: border-box; }
+  .legend-dot-empty { background: var(--storage-seg-remaining); border: 1px solid var(--color-border); }
+  .legend-label { font-size: var(--font-size-caption); color: var(--color-text-secondary); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .legend-value { font-family: var(--font-mono); font-size: var(--font-size-caption); color: var(--color-text-tertiary); white-space: nowrap; }
+  /* @component-css-end */
+</style>
+</head>
+<body>
+<h1 class="page-title">Progress Bar Component</h1>
+
+<div class="section">
+  <div class="section-label">Segmented Bar</div>
+  <div class="seg-bar" role="img" aria-label="存储使用分布 1TB">
+    <span class="seg-system" style="flex-basis:7.5%" title="系统 75GB"></span>
+    <span class="seg-tools" style="flex-basis:4.5%" title="工具 45GB"></span>
+    <span class="seg-ai" style="flex-basis:12%" title="AI 120GB"></span>
+    <span class="seg-platform" style="flex-basis:3%" title="平台 30GB"></span>
+    <span class="seg-env" style="flex-basis:2.5%" title="环境 25GB"></span>
+    <span class="seg-project" style="flex-basis:8%" title="项目 80GB"></span>
+    <span class="seg-redundant" style="flex-basis:4%" title="冗余 40GB"></span>
+    <span class="seg-remaining" style="flex-basis:58.5%" title="可用 585GB"></span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Mini Result Bar</div>
+  <div class="mini-row">
+    <i data-lucide="hard-drive" class="mini-icon" aria-hidden="true"></i>
+    <div class="mini-bar"><div class="mini-fill" style="width:47%"></div></div>
+    <span class="mini-pct">47%</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">Legend</div>
+  <div class="legend">
+    <div class="legend-item"><span class="legend-dot" style="background:var(--storage-seg-system)"></span><span class="legend-label">系统</span><span class="legend-value">75 GB</span></div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--storage-seg-tools)"></span><span class="legend-label">工具</span><span class="legend-value">45 GB</span></div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--storage-seg-ai)"></span><span class="legend-label">AI</span><span class="legend-value">120 GB</span></div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--storage-seg-platform)"></span><span class="legend-label">平台</span><span class="legend-value">30 GB</span></div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--storage-seg-env)"></span><span class="legend-label">环境</span><span class="legend-value">25 GB</span></div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--storage-seg-project)"></span><span class="legend-label">项目</span><span class="legend-value">80 GB</span></div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--storage-seg-redundant)"></span><span class="legend-label">冗余</span><span class="legend-value">40 GB</span></div>
+    <div class="legend-item"><span class="legend-dot legend-dot-empty"></span><span class="legend-label">可用</span><span class="legend-value">585 GB</span></div>
+  </div>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

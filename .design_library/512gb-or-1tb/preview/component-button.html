@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Button Component</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+/* Page scaffold — NOT extracted */
+body { margin: 0; padding: var(--space-lg); background: var(--color-bg-base); font-family: var(--font-sans); color: var(--color-text-primary); }
+.page-title { font-size: var(--type-h1); font-weight: var(--font-weight-h1); line-height: var(--line-height-h1); margin: 0 0 var(--space-lg); color: var(--color-text-primary); }
+.section { margin-bottom: var(--space-lg); }
+.section-label { font-size: var(--type-h3); font-weight: var(--font-weight-h3); line-height: var(--line-height-h3); color: var(--color-text-secondary); margin: 0 0 var(--space-sm); }
+.btn-row { display: flex; align-items: center; gap: var(--space-md); flex-wrap: wrap; }
+.capacity-row { display: flex; align-items: center; gap: var(--space-sm); flex-wrap: wrap; padding: var(--space-md); background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: var(--radius-lg); }
+.divider { height: 1px; background: var(--color-border); border: none; margin: var(--space-lg) 0; }
+
+/* @component-css-start */
+/* Component definitions — extracted to components.css by deterministic script */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); border: none; cursor: pointer; font-family: var(--font-sans); white-space: nowrap; transition: background-color 0.15s ease, border-color 0.15s ease; }
+.btn-primary { padding: 14px 32px; background: var(--color-primary-action); color: #ffffff; font-size: 0.95rem; font-weight: 600; border-radius: var(--radius-md); }
+.btn-primary:hover { background: var(--color-primary-hover); }
+.btn-secondary { padding: 10px 20px; background: transparent; color: var(--color-text-primary); font-size: 0.875rem; font-weight: 500; border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+.btn-secondary:hover { border-color: var(--color-border-hover); }
+.btn-cap { padding: 8px 16px; font-size: 0.875rem; font-weight: 500; border-radius: var(--radius-md); }
+.btn-cap-default { background: var(--color-bg-surface); color: var(--color-text-primary); border: 1px solid var(--color-border); }
+.btn-cap-default:hover { border-color: var(--color-border-hover); }
+.btn-cap-selected { background: var(--color-primary-action); color: #ffffff; border: 1px solid var(--color-primary-action); }
+.btn-cap-selected:hover { background: var(--color-primary-hover); }
+.btn-cap-recommended { background: transparent; color: var(--color-text-primary); border: 1px solid var(--color-state-manageable); }
+.btn-cap-recommended:hover { background: var(--color-state-manageable-bg); }
+.star { color: var(--color-state-manageable); }
+/* @component-css-end */
+</style>
+</head>
+<body>
+<h1 class="page-title">Button Component</h1>
+
+<div class="section">
+<h3 class="section-label">Primary</h3>
+<div class="btn-row">
+<button class="btn btn-primary">开始估算</button>
+</div>
+</div>
+
+<div class="section">
+<h3 class="section-label">Secondary</h3>
+<div class="btn-row">
+<button class="btn btn-secondary">返回调整</button>
+</div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+<h3 class="section-label">Capacity Default</h3>
+<div class="btn-row">
+<button class="btn btn-cap btn-cap-default">256GB</button>
+</div>
+</div>
+
+<div class="section">
+<h3 class="section-label">Capacity Selected</h3>
+<div class="btn-row">
+<button class="btn btn-cap btn-cap-selected">512GB</button>
+</div>
+</div>
+
+<div class="section">
+<h3 class="section-label">Capacity Recommended</h3>
+<div class="btn-row">
+<button class="btn btn-cap btn-cap-recommended"><span class="star">★</span>1TB</button>
+</div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+<h3 class="section-label">Capacity Selector</h3>
+<div class="capacity-row">
+<button class="btn btn-cap btn-cap-default">256GB</button>
+<button class="btn btn-cap btn-cap-selected">512GB</button>
+<button class="btn btn-cap btn-cap-recommended"><span class="star">★</span>1TB</button>
+<button class="btn btn-cap btn-cap-default">2TB</button>
+</div>
+</div>
+</body>
+</html>

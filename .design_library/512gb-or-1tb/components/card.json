@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 2,
+  "sourceKind": "structured-spec",
+  "slug": "card",
+  "name": "Card",
+  "confidence": "high",
+  "semanticTypeCandidates": ["container", "selectable", "result-display"],
+  "variantDimensions": [
+    { "name": "variant", "values": ["scenario", "config", "result", "estimation-note"] },
+    { "name": "state", "values": ["default", "selected", "hover"] }
+  ],
+  "representativeVariants": [
+    { "variant": "scenario", "desc": "Selectable card with icon + title + description, 3x2 grid", "tokens": ["--color-bg-elevated", "--color-border", "--radius-lg"] },
+    { "variant": "config", "desc": "Configuration panel card containing form controls", "tokens": ["--color-bg-elevated", "--color-border", "--radius-lg"] },
+    { "variant": "result", "desc": "Result display card with progress bar + breakdown + status", "tokens": ["--color-bg-elevated", "--color-border", "--radius-lg"] },
+    { "variant": "estimation-note", "desc": "Surface-level card for supplementary info", "tokens": ["--color-bg-surface", "--color-border", "--radius-md"] }
+  ],
+  "anatomy": {
+    "root": "div.storage-card | div.storage-card-surface | div.scenario-card",
+    "background": "--color-bg-elevated (card) | --color-bg-surface (card-surface)",
+    "border": "1px solid --color-border",
+    "radius": "--radius-lg (12px) for card | --radius-md (8px) for card-surface",
+    "padding": "--space-xl (32px) for card | --space-md (16px) for card-surface | 20px for scenario-card"
+  },
+  "structurePatterns": [
+    "Scenario card: flex column, gap 8px, cursor pointer, hover border-color change",
+    "Scenario card selected: border --color-primary, bg rgba(37,99,235,0.08)",
+    "Config card: vertical stack of form sections separated by --storage-divider",
+    "Result card: scenario label → recommend bar → capacity → breakdown → badge → progress bar → advice"
+  ],
+  "usageHints": [
+    "Scenario cards: 3x2 grid on desktop (grid-cols-3), 2-col on sm, 1-col on mobile",
+    "Result card: single instance, max-width content, S3 only",
+    "Estimation note: always below result card, surface background",
+    "Card padding updated to 32px (Direction C breathing room)"
+  ],
+  "doNotInvent": [
+    "No card shadows (hierarchy via background color + border only)",
+    "No glassmorphism or backdrop-filter",
+    "No decorative gradients on card backgrounds"
+  ],
+  "unknowns": []
+}

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 2,
+  "libraryName": "512gb-or-1tb",
+  "componentCount": 6,
+  "components": [
+    { "slug": "button", "name": "Button", "variants": 5 },
+    { "slug": "card", "name": "Card", "variants": 4 },
+    { "slug": "tag", "name": "Tag", "variants": 3 },
+    { "slug": "badge", "name": "Badge", "variants": 4 },
+    { "slug": "progress-bar", "name": "Progress Bar", "variants": 3 },
+    { "slug": "form-control", "name": "Form Control", "variants": 3 }
+  ]
+}

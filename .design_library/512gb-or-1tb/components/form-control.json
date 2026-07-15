@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 2,
+  "sourceKind": "structured-spec",
+  "slug": "form-control",
+  "name": "Form Control",
+  "confidence": "high",
+  "semanticTypeCandidates": ["input", "selector"],
+  "variantDimensions": [
+    { "name": "variant", "values": ["checkbox", "range-slider", "text-input"] },
+    { "name": "state", "values": ["default", "checked", "focus", "disabled"] }
+  ],
+  "representativeVariants": [
+    { "variant": "checkbox", "desc": "Checkbox with label + optional size annotation + optional new-tag", "tokens": ["--color-primary-action"] },
+    { "variant": "range-slider", "desc": "Range input 1-50 with mono count display", "tokens": ["--color-primary-action", "--color-bg-surface"] },
+    { "variant": "text-input", "desc": "Text input with border focus state", "tokens": ["--color-bg-surface", "--color-border", "--color-primary-action"] }
+  ],
+  "anatomy": {
+    "checkbox": {
+      "root": "label.storage-checkbox-label",
+      "input": "input[type=checkbox].storage-checkbox, 16x16, accent-color: --color-primary-action",
+      "label": "span, 0.875rem, --color-text-primary",
+      "sizeAnnotation": "span, --font-mono, 0.75rem, --color-text-tertiary, format: [2GB]"
+    },
+    "range-slider": {
+      "root": "div.flex.items-center.gap-3",
+      "input": "input[type=range].range-slider, flex:1, height:6px, --color-bg-surface, --radius-full",
+      "thumb": "16px round, --color-primary-action, focus ring --color-primary-subtle",
+      "count": "span, --font-mono, 0.875rem, --color-text-primary, format: 25 个"
+    },
+    "text-input": {
+      "root": "input.storage-input",
+      "padding": "8px 12px",
+      "background": "--color-bg-surface",
+      "border": "1px solid --color-border, focus: --color-primary-action",
+      "radius": "--radius-md",
+      "fontSize": "0.875rem"
+    }
+  },
+  "structurePatterns": [
+    "Checkbox: inline-flex, gap --space-sm, horizontally wrapped in groups",
+    "Checkbox groups: flex wrap, gap 6px 16px, categorized by sub-headers (编辑器/版本控制/运行时/设计)",
+    "Range slider: full width with count display on right, mono font",
+    "Text input: full width, border-color transition on focus"
+  ],
+  "usageHints": [
+    "Checkbox: tool/AI tool/platform/environment selection, each with [sizeGB] annotation",
+    "Range slider: project count per scenario (1-50), default 10 single / 5 multi",
+    "Text input: reserved for future use (v0.1.0 uses buttons/checkboxes/sliders only)",
+    "Checkbox labels include mono size annotations in brackets: [2GB], [15GB], [0GB]",
+    "New items marked with new-tag appended after size annotation"
+  ],
+  "doNotInvent": [
+    "No dropdown selects (replaced by button groups per design decision)",
+    "No radio buttons (checkboxes for multi-select, button groups for single-select)",
+    "No form validation error states (v0.1.0 scope)"
+  ],
+  "unknowns": []
+}

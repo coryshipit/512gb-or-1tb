@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Card Component</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+/* Page scaffold — NOT extracted */
+body { margin: 0; padding: var(--space-lg); background: var(--color-bg-base); font-family: var(--font-sans); color: var(--color-text-primary); }
+.page-title { font-size: var(--font-size-h1); font-weight: var(--font-weight-h1); line-height: var(--line-height-h1); margin: 0 0 var(--space-xl); letter-spacing: -0.02em; }
+.section { margin-bottom: var(--space-2xl); }
+.section-label { font-size: var(--font-size-caption); font-weight: var(--font-weight-h3); color: var(--color-text-tertiary); margin: 0 0 var(--space-md); text-transform: uppercase; letter-spacing: 0.08em; }
+.scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+.single-card { max-width: 600px; }
+
+/* @component-css-start */
+/* Component definitions — extracted to components.css */
+.scenario-card { display: flex; flex-direction: column; gap: var(--space-sm); padding: 20px; background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: var(--radius-lg); cursor: pointer; transition: border-color 0.15s ease, background-color 0.15s ease; }
+.scenario-card:hover { border-color: var(--color-border-hover); }
+.scenario-card.is-selected { border-color: var(--color-primary-action); background: var(--color-primary-subtle); }
+.scenario-card .icon { width: 32px; height: 32px; color: var(--color-primary); flex-shrink: 0; }
+.scenario-card .title { font-size: var(--font-size-h3); font-weight: var(--font-weight-h3); line-height: var(--line-height-h3); color: var(--color-text-primary); }
+.scenario-card .desc { font-size: var(--font-size-body); line-height: var(--line-height-body); color: var(--color-text-secondary); }
+
+.config-card { padding: var(--space-xl); background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: var(--radius-lg); }
+.config-card .config-heading { font-size: var(--font-size-h3); font-weight: var(--font-weight-h3); line-height: var(--line-height-h3); color: var(--color-text-primary); margin: 0 0 var(--space-md); }
+.config-card .field { display: flex; flex-direction: column; gap: var(--space-sm); margin-bottom: var(--space-md); }
+.config-card .field-label { font-size: var(--font-size-caption); color: var(--color-text-secondary); }
+
+.result-card { padding: var(--space-xl); background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: var(--radius-lg); }
+.result-card .result-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-md); }
+.result-card .scenario-label { font-size: var(--font-size-body); color: var(--color-text-secondary); }
+.result-card .capacity { margin-bottom: var(--space-sm); }
+.result-card .progress-track { width: 100%; height: var(--size-progress-bar-height); background: var(--color-bg-surface); border-radius: var(--radius-sm); overflow: hidden; margin: var(--space-md) 0; }
+.result-card .progress-fill { height: 100%; width: 72%; background: var(--color-state-comfortable); border-radius: var(--radius-sm); }
+.result-card .advice { font-size: var(--font-size-body); line-height: var(--line-height-body); color: var(--color-text-secondary); }
+
+.estimation-note { padding: var(--space-md); background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+.estimation-note .note-text { font-size: var(--font-size-caption); line-height: var(--line-height-caption); color: var(--color-text-tertiary); }
+/* @component-css-end */
+</style>
+</head>
+<body>
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="icon-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></symbol>
+</svg>
+
+<h1 class="page-title">Card Component</h1>
+
+<section class="section">
+  <div class="section-label">Scenario Card</div>
+  <div class="scenario-grid">
+    <div class="scenario-card">
+      <svg class="icon"><use href="#icon-code"/></svg>
+      <div class="title">Web 开发</div>
+      <div class="desc">前端、后端、全栈开发</div>
+    </div>
+    <div class="scenario-card is-selected">
+      <svg class="icon"><use href="#icon-code"/></svg>
+      <div class="title">Web 开发</div>
+      <div class="desc">前端、后端、全栈开发</div>
+    </div>
+    <div class="scenario-card">
+      <svg class="icon"><use href="#icon-code"/></svg>
+      <div class="title">Web 开发</div>
+      <div class="desc">前端、后端、全栈开发</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label">Config Card</div>
+  <div class="single-card">
+    <div class="config-card">
+      <div class="config-heading">细化配置</div>
+      <div class="field">
+        <span class="field-label">存储类型</span>
+        <input class="storage-input" type="text" value="SSD">
+      </div>
+      <hr class="storage-divider">
+      <label class="storage-checkbox-label"><input class="storage-checkbox" type="checkbox" checked>启用冗余备份</label>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label">Result Card</div>
+  <div class="single-card">
+    <div class="result-card">
+      <div class="result-row">
+        <span class="scenario-label">场景：Web开发</span>
+        <span class="storage-badge storage-badge-comfortable">舒适</span>
+      </div>
+      <div class="storage-mono-lg capacity">1TB</div>
+      <div class="progress-track"><div class="progress-fill"></div></div>
+      <div class="advice">当前配置可轻松满足 Web 开发场景的存储需求，留有充足余量用于项目扩展与依赖缓存。</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label">Estimation Note</div>
+  <div class="single-card">
+    <div class="estimation-note">
+      <div class="note-text">以上为基于典型使用强度的估算结果，实际占用因工作流、项目规模与缓存策略不同而存在差异，建议结合实际监测数据定期复核。</div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

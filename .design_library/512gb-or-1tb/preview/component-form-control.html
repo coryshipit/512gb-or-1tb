@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Control Component</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+/* Page scaffold — NOT extracted */
+body { margin: 0; padding: var(--space-md); background: var(--color-bg-base); font-family: var(--font-sans); color: var(--color-text-primary); }
+.page-title { font-size: var(--font-size-h2); font-weight: var(--font-weight-h2); line-height: var(--line-height-h2); margin: 0 0 var(--space-lg) 0; color: var(--color-text-primary); }
+.section { margin-bottom: var(--space-xl); }
+.section-label { font-size: var(--font-size-caption); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-text-tertiary); margin-bottom: var(--space-sm); }
+.config-card { background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-lg); max-width: 480px; }
+.config-card-title { font-size: var(--font-size-h3); font-weight: var(--font-weight-h3); line-height: var(--line-height-h3); color: var(--color-text-primary); margin: 0 0 var(--space-md); }
+.checkbox-group { display: flex; flex-direction: column; gap: var(--space-sm); }
+.range-stack { display: flex; flex-direction: column; gap: var(--space-md); }
+.input-stack { display: flex; flex-direction: column; gap: var(--space-md); max-width: 400px; }
+.state-tag { font-family: var(--font-mono); font-size: var(--font-size-caption); color: var(--color-text-tertiary); margin-bottom: var(--space-xs); display: block; }
+
+/* @component-css-start */
+/* Component definitions — extracted to components.css by deterministic script */
+.fc-checkbox-label { display: inline-flex; align-items: center; gap: var(--space-sm); font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-text-primary); cursor: pointer; }
+.fc-checkbox { width: 16px; height: 16px; accent-color: var(--color-primary-action); flex-shrink: 0; margin: 0; cursor: pointer; }
+.fc-size-annotation { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-tertiary); margin-left: var(--space-xs); }
+.new-tag { display: inline-flex; align-items: center; padding: 1px 6px; min-width: 28px; font-family: var(--font-sans); font-size: 0.6875rem; font-weight: 600; line-height: 1.4; border-radius: var(--radius-full); background-color: var(--color-state-manageable-bg); color: var(--color-state-manageable); white-space: nowrap; }
+.fc-checkbox-label .new-tag { margin-left: var(--space-xs); }
+.fc-range-row { display: flex; align-items: center; gap: var(--space-md); max-width: 500px; }
+.fc-range-label { font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-text-primary); white-space: nowrap; flex-shrink: 0; }
+.fc-range-slider { flex: 1; -webkit-appearance: none; appearance: none; height: 6px; background: var(--color-bg-surface); border-radius: var(--radius-full); outline: none; cursor: pointer; margin: 0; }
+.fc-range-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: var(--radius-full); background: var(--color-primary-action); cursor: pointer; border: none; }
+.fc-range-slider::-webkit-slider-thumb:focus { box-shadow: 0 0 0 4px var(--color-primary-subtle); }
+.fc-range-slider::-moz-range-thumb { width: 16px; height: 16px; border-radius: var(--radius-full); background: var(--color-primary-action); cursor: pointer; border: none; }
+.fc-range-slider::-moz-range-thumb:focus { box-shadow: 0 0 0 4px var(--color-primary-subtle); }
+.fc-range-count { font-family: var(--font-mono); font-size: 0.875rem; color: var(--color-text-primary); min-width: 48px; text-align: right; flex-shrink: 0; }
+.fc-input { width: 100%; padding: 8px 12px; background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); color: var(--color-text-primary); font-family: var(--font-sans); font-size: 0.875rem; outline: none; transition: border-color 0.15s ease; box-sizing: border-box; }
+.fc-input::placeholder { color: var(--color-text-tertiary); }
+.fc-input:hover { border-color: var(--color-border-hover); }
+.fc-input:focus { border-color: var(--color-primary-action); }
+/* @component-css-end */
+</style>
+</head>
+<body>
+
+<h1 class="page-title">Form Control Component</h1>
+
+<section class="section">
+  <div class="section-label">Checkbox</div>
+  <div class="config-card">
+    <div class="config-card-title">选择开发工具</div>
+    <div class="checkbox-group">
+      <label class="fc-checkbox-label"><input type="checkbox" class="fc-checkbox" checked> VS Code<span class="fc-size-annotation">[2GB]</span></label>
+      <label class="fc-checkbox-label"><input type="checkbox" class="fc-checkbox" checked> Git<span class="fc-size-annotation">[1GB]</span></label>
+      <label class="fc-checkbox-label"><input type="checkbox" class="fc-checkbox"> Docker<span class="fc-size-annotation">[50GB]</span><span class="new-tag">NEW</span></label>
+      <label class="fc-checkbox-label"><input type="checkbox" class="fc-checkbox" checked> Node.js<span class="fc-size-annotation">[3GB]</span></label>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label">Range Slider</div>
+  <div class="range-stack">
+    <div class="fc-range-row">
+      <span class="fc-range-label">Web 开发项目数量</span>
+      <input type="range" class="fc-range-slider" min="1" max="50" value="10">
+      <span class="fc-range-count">10 个</span>
+    </div>
+    <div class="fc-range-row">
+      <span class="fc-range-label">Web 开发项目数量</span>
+      <input type="range" class="fc-range-slider" min="1" max="50" value="25">
+      <span class="fc-range-count">25 个</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label">Text Input</div>
+  <div class="input-stack">
+    <div>
+      <span class="state-tag">default</span>
+      <input type="text" class="fc-input" placeholder="搜索工具...">
+    </div>
+    <div>
+      <span class="state-tag">focused</span>
+      <input type="text" class="fc-input" placeholder="搜索工具..." autofocus>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

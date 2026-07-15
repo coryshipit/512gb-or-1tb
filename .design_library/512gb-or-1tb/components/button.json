@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 2,
+  "sourceKind": "structured-spec",
+  "slug": "button",
+  "name": "Button",
+  "confidence": "high",
+  "semanticTypeCandidates": ["action", "toggle", "selector"],
+  "variantDimensions": [
+    { "name": "variant", "values": ["primary", "secondary", "capacity-default", "capacity-selected", "capacity-recommended"] },
+    { "name": "state", "values": ["default", "hover", "focus-visible", "disabled"] },
+    { "name": "size", "values": ["default", "compact"] }
+  ],
+  "representativeVariants": [
+    { "variant": "primary", "desc": "Solid blue fill, white text, CTA actions", "tokens": ["--color-primary-action", "--radius-md"] },
+    { "variant": "secondary", "desc": "Transparent bg, border outline, navigation actions", "tokens": ["--color-border", "--radius-md"] },
+    { "variant": "capacity-selected", "desc": "Solid blue fill, used for selected capacity/OS", "tokens": ["--color-primary-action"] },
+    { "variant": "capacity-recommended", "desc": "Amber border, transparent bg, ★ marker", "tokens": ["--color-state-manageable"] },
+    { "variant": "capacity-default", "desc": "Surface bg, border, unselected capacity/OS", "tokens": ["--color-bg-surface", "--color-border"] }
+  ],
+  "anatomy": {
+    "root": "button.capacity-btn | button.storage-btn-primary | button.storage-btn-secondary | button.cta-estimate-btn",
+    "content": "text label (required) + optional icon (16px) + optional ★ marker",
+    "padding": "10px 20px (primary/secondary) | 8px 16px (capacity) | 14px 32px (CTA full-width)",
+    "radius": "--radius-md (8px)",
+    "fontSize": "0.875rem (primary/secondary) | 0.95rem (CTA)",
+    "fontWeight": "500 (primary/secondary) | 600 (CTA)"
+  },
+  "structurePatterns": [
+    "Flex row, centered content, gap 4-8px",
+    "White-space: nowrap to prevent label wrapping",
+    "Transition: background-color 0.15s ease or border-color 0.15s ease"
+  ],
+  "usageHints": [
+    "Primary: CTA actions (查看完整结果, 开始估算)",
+    "Secondary: navigation (返回调整, 修改)",
+    "Capacity: 256GB/512GB/1TB/2TB selector, macOS/Windows/Linux OS selector",
+    "Recommended capacity uses amber border + ★, never solid fill",
+    "CTA full-width button uses --space-xl margin-top for separation"
+  ],
+  "doNotInvent": [
+    "No gradient buttons",
+    "No shadow on buttons",
+    "No icon-only buttons (always have text label)",
+    "No rounded-full buttons (max --radius-md)"
+  ],
+  "unknowns": []
+}
