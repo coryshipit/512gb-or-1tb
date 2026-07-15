@@ -21,14 +21,14 @@
 */
 /* Component definitions — extracted to components.css by deterministic script */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); border: none; cursor: pointer; font-family: var(--font-sans); white-space: nowrap; transition: background-color 0.15s ease, border-color 0.15s ease; }
-.btn-primary { padding: 14px 32px; background: var(--color-primary-action); color: var(--color-white); font-size: 0.95rem; font-weight: 600; border-radius: var(--radius-md); }
+.btn-primary { padding: 14px 32px; background: var(--color-primary-action); color: #ffffff; font-size: 0.95rem; font-weight: 600; border-radius: var(--radius-md); }
 .btn-primary:hover { background: var(--color-primary-hover); }
 .btn-secondary { padding: 10px 20px; background: transparent; color: var(--color-text-primary); font-size: 0.875rem; font-weight: 500; border: 1px solid var(--color-border); border-radius: var(--radius-md); }
 .btn-secondary:hover { border-color: var(--color-border-hover); }
 .btn-cap { padding: 8px 16px; font-size: 0.875rem; font-weight: 500; border-radius: var(--radius-md); }
 .btn-cap-default { background: var(--color-bg-surface); color: var(--color-text-primary); border: 1px solid var(--color-border); }
 .btn-cap-default:hover { border-color: var(--color-border-hover); }
-.btn-cap-selected { background: var(--color-primary-action); color: var(--color-white); border: 1px solid var(--color-primary-action); }
+.btn-cap-selected { background: var(--color-primary-action); color: #ffffff; border: 1px solid var(--color-primary-action); }
 .btn-cap-selected:hover { background: var(--color-primary-hover); }
 .btn-cap-recommended { background: transparent; color: var(--color-text-primary); border: 1px solid var(--color-state-manageable); }
 .btn-cap-recommended:hover { background: var(--color-state-manageable-bg); }

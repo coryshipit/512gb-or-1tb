@@ -1,0 +1,90 @@
+{
+  "data": [
+    {
+      "id": "page-s0-scenario-select",
+      "title": "S0 场景选择",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1752537600000,
+      "canvasData": {
+        "x": 0,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/s0-scenario-select.html",
+        "interactions": [
+          {
+            "domId": "cta-select-scenario",
+            "targetPageId": "page-s1-config",
+            "transitionLabel": "开始估算"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-s1-config",
+      "title": "S1 配置调整",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1752537600000,
+      "canvasData": {
+        "x": 620,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/s1-config.html",
+        "interactions": [
+          {
+            "domId": "cta-view-results",
+            "targetPageId": "page-s3-results",
+            "transitionLabel": "查看完整结果"
+          },
+          {
+            "domId": "back-scenario",
+            "targetPageId": "page-s0-scenario-select",
+            "hideEdge": true,
+            "transitionLabel": "修改场景"
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-s3-results",
+      "title": "S3 容量建议",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1752537600000,
+      "canvasData": {
+        "x": 1240,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/s3-results.html",
+        "interactions": [
+          {
+            "domId": "back-refine",
+            "targetPageId": "page-s1-config",
+            "hideEdge": true,
+            "transitionLabel": "返回调整"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "autoLayout": true,
+    "deviceType": "desktop",
+    "projectName": "512GB还是1TB — 高保真原型",
+    "designLibrary": {
+      "name": "512gb-or-1tb",
+      "id": "-2JI4XLQA0BPPF",
+      "version": 20,
+      "scope": "workspace",
+      "path": "e:\\Projects\\512gb-or-1tb\\.design_library\\512gb-or-1tb",
+      "versionSource": "metadata.json"
+    }
+  }
+}

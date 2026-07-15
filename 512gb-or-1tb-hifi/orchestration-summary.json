@@ -1,0 +1,48 @@
+{
+  "project": {
+    "name": "512gb-or-1tb-hifi",
+    "displayName": "512GB还是1TB — 高保真原型",
+    "deviceType": "desktop",
+    "pageCount": 3,
+    "generationTree": {
+      "nodes": [
+        { "id": "page-s0-scenario-select", "htmlSrc": "pages/s0-scenario-select.html", "type": "leaf" },
+        { "id": "page-s1-config", "htmlSrc": "pages/s1-config.html", "type": "leaf" },
+        { "id": "page-s3-results", "htmlSrc": "pages/s3-results.html", "type": "leaf" }
+      ]
+    }
+  },
+  "designSource": {
+    "operatingMode": "library-bound",
+    "libraryIdentity": {
+      "name": "512gb-or-1tb",
+      "id": "-2JI4XLQA0BPPF",
+      "version": 20,
+      "scope": "workspace",
+      "path": "e:\\Projects\\512gb-or-1tb\\.design_library\\512gb-or-1tb",
+      "versionSource": "metadata.json"
+    },
+    "brandPrefix": "storage",
+    "cssPath": "e:\\Projects\\512gb-or-1tb\\512gb-or-1tb-hifi\\colors_and_type.css",
+    "componentsCssPath": "e:\\Projects\\512gb-or-1tb\\512gb-or-1tb-hifi\\components.css",
+    "tokenFidelity": "strict"
+  },
+  "wiringPlan": {
+    "visibleWiring": [
+      { "from": "page-s0-scenario-select", "to": "page-s1-config", "domId": "cta-select-scenario", "label": "开始估算" },
+      { "from": "page-s1-config", "to": "page-s3-results", "domId": "cta-view-results", "label": "查看完整结果" }
+    ],
+    "hiddenInteractions": [
+      { "from": "page-s3-results", "to": "page-s1-config", "domId": "back-refine", "hideEdge": true, "label": "返回调整", "reason": "back" },
+      { "from": "page-s1-config", "to": "page-s0-scenario-select", "domId": "back-scenario", "hideEdge": true, "label": "修改场景", "reason": "back/modify" }
+    ]
+  },
+  "componentPlan": [
+    { "slug": "button", "previewFile": "e:\\Projects\\512gb-or-1tb\\.design_library\\512gb-or-1tb\\preview\\component-button.html" },
+    { "slug": "card", "previewFile": "e:\\Projects\\512gb-or-1tb\\.design_library\\512gb-or-1tb\\preview\\component-card.html" },
+    { "slug": "tag", "previewFile": "e:\\Projects\\512gb-or-1tb\\.design_library\\512gb-or-1tb\\preview\\component-tag.html" },
+    { "slug": "badge", "previewFile": "e:\\Projects\\512gb-or-1tb\\.design_library\\512gb-or-1tb\\preview\\component-badge.html" },
+    { "slug": "progress-bar", "previewFile": "e:\\Projects\\512gb-or-1tb\\.design_library\\512gb-or-1tb\\preview\\component-progress-bar.html" },
+    { "slug": "form-control", "previewFile": "e:\\Projects\\512gb-or-1tb\\.design_library\\512gb-or-1tb\\preview\\component-form-control.html" }
+  ]
+}
