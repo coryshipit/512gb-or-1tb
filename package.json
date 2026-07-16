@@ -1,0 +1,27 @@
+{
+  "name": "512gb-or-1tb",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "面向开发者、设计师与创作者的存储容量决策工具",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "lucide-react": "^0.400.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.0",
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0",
+    "vite": "^6.0.0",
+    "vitest": "^2.0.0"
+  }
+}
