@@ -7,12 +7,12 @@ export const tools = [
   // 编辑器
   { id: 'vscode', nameKey: 'tools.vscode', sizeGB: 2, category: 'editor' },
   // 版本控制
-  { id: 'git', nameKey: 'tools.git', sizeGB: 1, category: 'vcs' },
+  { id: 'git', nameKey: 'tools.git', sizeGB: 0.5, category: 'vcs' },
   { id: 'github-desktop', nameKey: 'tools.githubDesktop', sizeGB: 1, category: 'vcs' },
   // 运行基础库
-  { id: 'nodejs', nameKey: 'tools.nodejs', sizeGB: 15, category: 'runtime' },
-  { id: 'python', nameKey: 'tools.python', sizeGB: 10, category: 'runtime' },
-  { id: 'rust', nameKey: 'tools.rust', sizeGB: 15, category: 'runtime' },
+  { id: 'nodejs', nameKey: 'tools.nodejs', sizeGB: 6, category: 'runtime' },
+  { id: 'python', nameKey: 'tools.python', sizeGB: 6, category: 'runtime' },
+  { id: 'rust', nameKey: 'tools.rust', sizeGB: 8, category: 'runtime' },
   // 平台 SDK
   { id: 'xcode', nameKey: 'tools.xcode', sizeGB: 60, category: 'sdk' },
   { id: 'android-studio', nameKey: 'tools.androidStudio', sizeGB: 40, category: 'sdk' },
@@ -20,11 +20,10 @@ export const tools = [
   // 设计
   { id: 'figma', nameKey: 'tools.figma', sizeGB: 2, category: 'design' },
   { id: 'adobe-affinity', nameKey: 'tools.adobeAffinity', sizeGB: 30, category: 'design' },
-  { id: 'design-assets', nameKey: 'tools.designAssets', sizeGB: 50, category: 'design' },
   // 游戏引擎（Unity 与 Unreal 互斥，由组件层处理）
-  { id: 'unity', nameKey: 'tools.unity', sizeGB: 50, category: 'game-engine' },
+  { id: 'unity', nameKey: 'tools.unity', sizeGB: 30, category: 'game-engine' },
   { id: 'unreal', nameKey: 'tools.unreal', sizeGB: 120, category: 'game-engine' },
   // 其他
   { id: 'blender', nameKey: 'tools.blender', sizeGB: 5, category: 'other' },
-  { id: 'davinci-resolve', nameKey: 'tools.davinciResolve', sizeGB: 5, category: 'other' },
+  { id: 'davinci-resolve', nameKey: 'tools.davinciResolve', sizeGB: 7, category: 'other' },
 ];

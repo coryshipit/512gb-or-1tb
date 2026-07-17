@@ -1,7 +1,8 @@
 /**
  * 使用场景数据
- * 来源：prd.md "六个场景的完整预测配置" 章节
+ * 来源：DATA_MODEL.md "使用场景与项目大小" 章节
  * 每个场景携带一套预测配置：推荐 OS、默认工具、默认智能体、默认平台、默认环境、单项目大小
+ * Design Assets 已删除，素材引用归入设计师单项目大小（8GB/项目）
  */
 export const scenarios = [
   {
@@ -42,11 +43,11 @@ export const scenarios = [
     nameKey: 'scenarios.designer',
     descKey: 'scenarios.designer.desc',
     recommendedOS: 'macos',
-    defaultTools: ['figma', 'adobe-affinity', 'design-assets'],
+    defaultTools: ['figma', 'adobe-affinity'],
     defaultAITools: ['chatgpt'],
     defaultPlatforms: ['web'],
     defaultEnvironments: [],
-    projectSizeGB: 5,
+    projectSizeGB: 8,
   },
   {
     id: 'gamedev',
@@ -57,7 +58,7 @@ export const scenarios = [
     defaultAITools: ['cursor'],
     defaultPlatforms: ['windows', 'web'],
     defaultEnvironments: [],
-    projectSizeGB: 30,
+    projectSizeGB: 35,
   },
   {
     id: 'content',
@@ -68,6 +69,6 @@ export const scenarios = [
     defaultAITools: ['chatgpt', 'claude-code'],
     defaultPlatforms: ['web'],
     defaultEnvironments: [],
-    projectSizeGB: 15,
+    projectSizeGB: 20,
   },
 ];

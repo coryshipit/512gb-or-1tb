@@ -50,13 +50,13 @@ describe('calculateStorage — 各分项计算', () => {
     const result = calculateStorage({
       capacityGB: 512,
       systemId: 'macos',
-      selectedTools: ['vscode', 'git', 'nodejs'], // 2 + 1 + 15 = 18
+      selectedTools: ['vscode', 'git', 'nodejs'], // 2 + 0.5 + 6 = 8.5
       selectedAITools: [],
       selectedPlatforms: [],
       selectedEnvironments: [],
       projectCounts: {},
     });
-    expect(result.breakdown.tools).toBe(18);
+    expect(result.breakdown.tools).toBe(8.5);
   });
 
   it('智能体：勾选项 sizeGB 之和', () => {
@@ -64,12 +64,12 @@ describe('calculateStorage — 各分项计算', () => {
       capacityGB: 512,
       systemId: 'macos',
       selectedTools: [],
-      selectedAITools: ['cursor', 'chatgpt'], // 3 + 10 = 13
+      selectedAITools: ['cursor', 'chatgpt'], // 2 + 3 = 5
       selectedPlatforms: [],
       selectedEnvironments: [],
       projectCounts: {},
     });
-    expect(result.breakdown.aiTools).toBe(13);
+    expect(result.breakdown.aiTools).toBe(5);
   });
 
   it('目标平台：勾选项 sizeGB 之和（Web 平台为 0GB）', () => {
@@ -78,11 +78,11 @@ describe('calculateStorage — 各分项计算', () => {
       systemId: 'macos',
       selectedTools: [],
       selectedAITools: [],
-      selectedPlatforms: ['web', 'ios'], // 0 + 20 = 20
+      selectedPlatforms: ['web', 'ios'], // 0 + 5 = 5
       selectedEnvironments: [],
       projectCounts: {},
     });
-    expect(result.breakdown.platforms).toBe(20);
+    expect(result.breakdown.platforms).toBe(5);
   });
 
   it('运行环境：勾选项 sizeGB 之和', () => {
@@ -170,14 +170,14 @@ describe('calculateStorage — 总占用、剩余、剩余比例', () => {
       capacityGB: 512,
       systemId: 'macos', // 75
       selectedTools: ['vscode'], // 2
-      selectedAITools: ['cursor'], // 3
+      selectedAITools: ['cursor'], // 2
       selectedPlatforms: ['web'], // 0
       selectedEnvironments: [],
       projectCounts: { web: 10 }, // 30
       // 冗余 512 → 50
-      // 总占用 = 75 + 2 + 3 + 0 + 0 + 30 + 50 = 160
+      // 总占用 = 75 + 2 + 2 + 0 + 0 + 30 + 50 = 159
     });
-    expect(result.totalUsed).toBe(160);
+    expect(result.totalUsed).toBe(159);
   });
 
   it('剩余 = 总容量 - 总占用', () => {
@@ -190,7 +190,7 @@ describe('calculateStorage — 总占用、剩余、剩余比例', () => {
       selectedEnvironments: [],
       projectCounts: { web: 10 },
     });
-    expect(result.remaining).toBe(512 - 160);
+    expect(result.remaining).toBe(512 - 159);
   });
 
   it('剩余比例 = 剩余 / 总容量', () => {
@@ -203,7 +203,7 @@ describe('calculateStorage — 总占用、剩余、剩余比例', () => {
       selectedEnvironments: [],
       projectCounts: { web: 10 },
     });
-    expect(result.remainingRatio).toBeCloseTo((512 - 160) / 512, 5);
+    expect(result.remainingRatio).toBeCloseTo((512 - 159) / 512, 5);
   });
 
   it('边界：总占用超过总容量时，剩余为负数', () => {
@@ -234,13 +234,12 @@ describe('calculateStorage — 状态等级判断', () => {
 
   it('剩余比例 < 10% → 紧张（critical）', () => {
     // 用标准档位 256：macOS 75 + 冗余 30 = 105
-    // 加大占用：xcode(60) + android-studio(40) = 100 → 总占用 205
-    // 剩余 256 - 205 = 51 → 51/256 = 19.9%（manageable，不够低）
-    // 改：加 design-assets(50) → 总占用 255，剩余 1/256 = 0.4% < 10%
+    // xcode(60) + android-studio(40) + unity(30) = 130 → 总占用 235
+    // 剩余 256 - 235 = 21 → 8.2% < 10%
     const result = calculateStorage({
       ...baseInput,
       capacityGB: 256,
-      selectedTools: ['xcode', 'android-studio', 'design-assets'],
+      selectedTools: ['xcode', 'android-studio', 'unity'],
     });
     expect(result.remainingRatio).toBeLessThan(0.1);
     expect(result.status).toBe('critical');
@@ -262,12 +261,11 @@ describe('calculateStorage — 状态等级判断', () => {
 
   it('剩余比例 20%-40% → 舒适（comfortable）', () => {
     // 512 档：macOS 75 + 冗余 50 = 125
-    // xcode(60) + design-assets(50) = 110 → 总占用 235，剩余 277/512 = 54%（abundant）
-    // 需更大占用：win-vm(120) → 总占用 355，剩余 157/512 = 30.7%（comfortable）
+    // xcode(60) + unity(30) + win-vm(120) = 210 → 总占用 335，剩余 177/512 = 34.6%（comfortable）
     const result = calculateStorage({
       ...baseInput,
       capacityGB: 512,
-      selectedTools: ['xcode', 'design-assets'],
+      selectedTools: ['xcode', 'unity'],
       selectedEnvironments: ['win-vm'],
     });
     expect(result.remainingRatio).toBeGreaterThanOrEqual(0.2);
@@ -313,27 +311,23 @@ describe('calculateStorage — 推荐容量', () => {
   });
 
   it('总占用（含冗余）400-850GB → 推荐 1TB', () => {
-    // macOS 75 + unreal(120) + design-assets(50) + 冗余 80(1TB档) = 325? 需要更大
-    // 用 win-vm(120) + dual-boot(150)
-    // 75 + 120 + 150 = 345 + 冗余 ... 需到 400+
-    // macOS 75 + unreal(120) + design-assets(50) + win-vm(120) + dual-boot(150) = 515
+    // macOS 75 + unreal(120) + win-vm(120) + dual-boot(150) = 465 + 冗余 100(2TB档) = 565
     const result = calculateStorage({
       ...baseInput,
       capacityGB: 2048,
-      selectedTools: ['unreal', 'design-assets'],
+      selectedTools: ['unreal'],
       selectedEnvironments: ['win-vm', 'dual-boot'],
     });
     expect(result.recommendedCapacity).toBe(1024);
   });
 
   it('总占用（含冗余）> 850GB → 推荐 2TB', () => {
-    // 构造超大占用：75 + unreal(120) + design-assets(50) + win-vm(120) + linux-vm(50) + dual-boot(150)
-    // = 565 + 项目(大量) + 冗余 100 = ...
-    // 用项目数量堆高：gamedev 30GB/个 × 20 = 600
+    // macOS 75 + unreal(120) + win-vm(120) + linux-vm(50) + dual-boot(150) = 515
+    // + gamedev 35GB/个 × 20 = 700 → 1215 + 冗余 100 = 1315 > 850
     const result = calculateStorage({
       ...baseInput,
       capacityGB: 2048,
-      selectedTools: ['unreal', 'design-assets'],
+      selectedTools: ['unreal'],
       selectedEnvironments: ['win-vm', 'linux-vm', 'dual-boot'],
       projectCounts: { gamedev: 20 },
     });
@@ -393,8 +387,8 @@ describe('calculateStorage — 边界值', () => {
       selectedAITools: [],
       selectedPlatforms: [],
       selectedEnvironments: [],
-      projectCounts: { gamedev: 50 }, // 30 * 50 = 1500
+      projectCounts: { gamedev: 50 }, // 35 * 50 = 1750
     });
-    expect(result.breakdown.projects).toBe(1500);
+    expect(result.breakdown.projects).toBe(1750);
   });
 });
