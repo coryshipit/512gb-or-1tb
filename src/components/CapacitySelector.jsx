@@ -21,9 +21,12 @@ export default function CapacitySelector({
   recommendedCapacity,
   onChange,
   showHint,
+  exceedsAllTiers,
 }) {
   const t = i18n[lang];
-  const isRecommended = (cap) => cap === recommendedCapacity && cap !== capacityGB;
+  // 溢出所有档位时，不展示任何推荐标记
+  const isRecommended = (cap) =>
+    !exceedsAllTiers && cap === recommendedCapacity && cap !== capacityGB;
   const isSelected = (cap) => cap === capacityGB;
 
   return (
@@ -93,8 +96,8 @@ export default function CapacitySelector({
         <div
           style={{
             marginTop: 12,
-            backgroundColor: 'var(--state-manageable-bg)',
-            borderLeft: '3px solid var(--state-manageable)',
+            backgroundColor: exceedsAllTiers ? 'var(--state-critical-bg)' : 'var(--state-manageable-bg)',
+            borderLeft: exceedsAllTiers ? '3px solid var(--state-critical)' : '3px solid var(--state-manageable)',
             borderRadius: 'var(--radius-sm)',
             padding: '8px 12px',
           }}
@@ -102,11 +105,11 @@ export default function CapacitySelector({
           <p
             style={{
               fontSize: 'var(--font-size-caption)',
-              color: 'var(--state-manageable)',
+              color: exceedsAllTiers ? 'var(--state-critical)' : 'var(--state-manageable)',
               margin: 0,
             }}
           >
-            {t['result.hint.larger']}
+            {exceedsAllTiers ? t['result.hint.overflow'] : t['result.hint.larger']}
           </p>
         </div>
       )}

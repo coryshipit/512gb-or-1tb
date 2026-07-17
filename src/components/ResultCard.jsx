@@ -7,6 +7,7 @@ import { Check } from 'lucide-react';
 import SpaceBar from './SpaceBar';
 import { scenarios } from '../data/scenarios';
 import { i18n } from '../data/i18n';
+import { exceedsAllTiers } from '../utils/calculateStorage';
 
 // 状态徽章样式映射
 const STATUS_BADGE = {
@@ -25,7 +26,12 @@ const CAPACITY_LABELS = {
 };
 
 // 根据状态生成购买建议文案
-function getAdvice(t, status, capacityGB, recommendedCapacity) {
+function getAdvice(t, status, capacityGB, recommendedCapacity, exceeds2TB) {
+  // 即使 2TB 也不够 → 提示 4TB 及以上
+  if (exceeds2TB) {
+    return t['result.advice.overflow'];
+  }
+
   const capLabel = CAPACITY_LABELS[capacityGB] || `${capacityGB}GB`;
   const recLabel = CAPACITY_LABELS[recommendedCapacity] || '';
 
@@ -64,7 +70,10 @@ export default function ResultCard({
 
   const badge = STATUS_BADGE[status];
   const isRecommendedCapacity = capacityGB === recommendedCapacity;
-  const advice = getAdvice(t, status, capacityGB, recommendedCapacity);
+
+  const exceeds2TB = exceedsAllTiers(calculation);
+
+  const advice = getAdvice(t, status, capacityGB, recommendedCapacity, exceeds2TB);
 
   // 场景标注
   const scenarioLabels = selectedScenarios
@@ -84,6 +93,7 @@ export default function ResultCard({
           fontSize: 'var(--font-size-caption)',
           color: 'var(--storage-text-tertiary)',
           margin: '0 0 12px 0',
+          overflowWrap: 'break-word',
         }}
       >
         {t['result.scenario']}：{scenarioLabels}

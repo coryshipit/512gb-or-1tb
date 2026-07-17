@@ -91,7 +91,7 @@ export default function Header({ lang, onToggleLang }) {
             href="https://github.com/coryshipit/512gb-or-1tb"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 whitespace-nowrap"
+            className="inline-flex items-center gap-1"
             style={{
               color: 'var(--storage-text-tertiary)',
               textDecoration: 'none',
@@ -100,7 +100,7 @@ export default function Header({ lang, onToggleLang }) {
             }}
           >
             <Github style={{ width: 16, height: 16 }} />
-            <span>GitHub</span>
+            <span className="hidden sm:inline">GitHub</span>
           </a>
         </div>
       </div>

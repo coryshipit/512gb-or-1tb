@@ -63,6 +63,8 @@
 
 这个工具不会告诉你"精确到 MB"的数字 —— 它做的是帮你**跨过决策门槛**。512GB 够不够？1TB 值不值得多花 2000 块？三分钟，心里有数。
 
+想知道每个数字背后的来源和估算方法？查阅 [DATA_MODEL_ZH.md](DATA_MODEL_ZH.md)，里面记录了计算引擎中每一项数据的依据与可信度分级。
+
 ### 本地开发
 
 ```bash
@@ -121,6 +123,8 @@ Pick your use cases, tweak a few sliders, and get a clear recommendation in unde
 > **Better vaguely right than precisely wrong.**
 
 This tool won't give you a byte-level breakdown. It's designed to help you cross the decision threshold: *Is 512GB enough? Is 1TB worth the extra money?* Three minutes, and you'll know.
+
+Curious where the numbers come from? See [DATA_MODEL_EN.md](DATA_MODEL_EN.md) for the provenance and confidence tier behind every estimate in the calculation engine.
 
 ### Local Development
 

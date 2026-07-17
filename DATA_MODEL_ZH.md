@@ -1,3 +1,7 @@
+[English version](DATA_MODEL_EN.md)
+
+> **中文版为数据权威源。** 所有数值变更必须先更新本文件，再同步翻译至 [DATA_MODEL_EN.md](DATA_MODEL_EN.md)。
+
 # 决策模型数据溯源
 
 > **512GB or 1TB** — 面向开发者、设计师与创作者的存储容量决策工具。

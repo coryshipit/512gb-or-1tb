@@ -4,7 +4,7 @@
  * 测试范围遵循 tech-notes.md "测试范围（第一版）"
  */
 import { describe, it, expect } from 'vitest';
-import { calculateStorage } from './calculateStorage';
+import { calculateStorage, sumSize, getDefaultCapacity, exceedsAllTiers } from './calculateStorage';
 
 describe('calculateStorage — 各分项计算', () => {
   it('操作系统：macOS = 75GB（含 Homebrew）', () => {
@@ -390,5 +390,201 @@ describe('calculateStorage — 边界值', () => {
       projectCounts: { gamedev: 50 }, // 35 * 50 = 1750
     });
     expect(result.breakdown.projects).toBe(1750);
+  });
+});
+
+describe('calculateStorage — 极限全选', () => {
+  it('6 场景全选 + 全部工具 + 全部 AI + 全部平台 + 全部环境 + 最大项目数', () => {
+    // 最极端的用户：什么都做，什么都装
+    // OS: Windows 80
+    // 工具: 全部（Unity 与 Unreal 互斥，取 Unreal）= 292.5
+    // AI: 全部 = 6.5
+    // 平台: 全部 = 30
+    // 环境: 全部 = 370
+    // 项目: 每场景 50 个 = 3750
+    // 冗余: 2048→100
+    // 总占用 = 80 + 292.5 + 6.5 + 30 + 370 + 3750 + 100 = 4629
+    const result = calculateStorage({
+      capacityGB: 2048,
+      systemId: 'windows',
+      selectedTools: [
+        'vscode', 'git', 'github-desktop',
+        'nodejs', 'python', 'rust',
+        'xcode', 'android-studio', 'wechat-devtools',
+        'figma', 'adobe-affinity',
+        'unreal', 'blender', 'davinci-resolve',
+      ],
+      selectedAITools: ['cursor', 'chatgpt', 'copilot', 'claude-code'],
+      selectedPlatforms: ['web', 'windows', 'macos', 'linux', 'ios', 'android', 'wechat-miniapp'],
+      selectedEnvironments: ['docker', 'win-vm', 'linux-vm', 'dual-boot'],
+      projectCounts: { web: 50, mobile: 50, desktop: 50, designer: 50, gamedev: 50, content: 50 },
+    });
+
+    expect(result.breakdown.system).toBe(80);
+    expect(result.breakdown.tools).toBe(292.5);
+    expect(result.breakdown.aiTools).toBe(6.5);
+    expect(result.breakdown.platforms).toBe(30);
+    expect(result.breakdown.environments).toBe(370);
+    expect(result.breakdown.projects).toBe(3750);
+    expect(result.totalUsed).toBe(4629);
+    expect(result.remaining).toBe(2048 - 4629); // 负值，远超所有档位
+    expect(result.status).toBe('critical');
+    expect(result.recommendedCapacity).toBe(2048); // 最大推荐仍是 2TB
+  });
+});
+
+describe('getDefaultCapacity — 差异化初始容量', () => {
+  it('Web 开发（单选 10 项目）→ 256GB', () => {
+    // OS 75 + tools(21.5) + AI 2 + platform 0 + projects(3×10=30) = 128.5
+    // 256:冗余30→158.5, 剩余97.5/256=38.1% ≥ 20%
+    expect(getDefaultCapacity(128.5)).toBe(256);
+  });
+
+  it('移动应用开发（单选 10 项目）→ 512GB', () => {
+    // OS 75 + tools(2+0.5+6+60+40=108.5) + AI 2 + platform(5+5=10) + projects(4×10=40) = 235.5
+    // 256:冗余30→265.5 溢出 ❌ → 512:冗余50→285.5, 226.5/512=44.2% ≥ 20%
+    expect(getDefaultCapacity(235.5)).toBe(512);
+  });
+
+  it('桌面应用开发（单选 10 项目）→ 256GB', () => {
+    // OS 75 + tools(2+0.5+6+8=16.5) + AI 2 + platform(5+5+5=15) + projects(5×10=50) = 158.5
+    // 256:冗余30→188.5, 67.5/256=26.4% ≥ 20%
+    expect(getDefaultCapacity(158.5)).toBe(256);
+  });
+
+  it('设计师（单选 10 项目）→ 512GB', () => {
+    // OS 75 + tools(2+30=32) + AI 3 + platform 0 + projects(8×10=80) = 190
+    // 256:冗余30→220, 36/256=14.1% ❌ → 512:冗余50→240, 272/512=53.1% ≥ 20%
+    expect(getDefaultCapacity(190)).toBe(512);
+  });
+
+  it('游戏开发（单选 10 项目）→ 1TB', () => {
+    // OS 80 + tools(2+0.5+30+5+6=43.5) + AI 2 + platform(5+0=5) + projects(35×10=350) = 480.5
+    // 256 溢出 → 512 溢出 → 1024:冗余80→560.5, 463.5/1024=45.3% ≥ 20%
+    expect(getDefaultCapacity(480.5)).toBe(1024);
+  });
+
+  it('自媒体运营（单选 10 项目）→ 512GB', () => {
+    // OS 75 + tools(7+30+2+2=41) + AI(3+1=4) + platform 0 + projects(20×10=200) = 320
+    // 256 溢出 → 512:冗余50→370, 142/512=27.7% ≥ 20%
+    expect(getDefaultCapacity(320)).toBe(512);
+  });
+
+  it('多选（Web+移动+桌面+设计，各 5 项目）→ 1TB', () => {
+    // OS 75 + tools 155.5 + AI 5 + platform 25 + projects 100 = 360.5
+    // 512:冗余50→410.5, 101.5/512=19.8% ❌ → 1024:冗余80→440.5, 583.5/1024=57.0% ≥ 20%
+    expect(getDefaultCapacity(360.5)).toBe(1024);
+  });
+
+  it('六场景全选（各 5 项目）→ 1TB', () => {
+    // OS 75 + tools 202.5 + AI 6.5 + platform 30 + projects 375 = 689
+    // 512 溢出 → 1024:冗余80→769, 255/1024=24.9% ≥ 20%
+    expect(getDefaultCapacity(689)).toBe(1024);
+  });
+
+  it('极限全选（各 50 项目）→ 所有档位溢出，返回 2048', () => {
+    // OS 80 + tools 292.5 + AI 6.5 + platform 30 + projects(3+4+5+8+35+20)×50=3750 = 4159
+    // 全部溢出 → 返回 2048
+    expect(getDefaultCapacity(4159)).toBe(2048);
+  });
+
+  it('极小占用 → 256GB', () => {
+    expect(getDefaultCapacity(50)).toBe(256);
+  });
+});
+
+describe('sumSize — 工具函数', () => {
+  it('从资源池按 ID 求和', () => {
+    const pool = [
+      { id: 'a', sizeGB: 10 },
+      { id: 'b', sizeGB: 20 },
+      { id: 'c', sizeGB: 30 },
+    ];
+    expect(sumSize(pool, ['a', 'c'])).toBe(40);
+  });
+
+  it('不存在的 ID 被忽略', () => {
+    const pool = [{ id: 'a', sizeGB: 10 }];
+    expect(sumSize(pool, ['a', 'nonexistent'])).toBe(10);
+  });
+
+  it('空数组返回 0', () => {
+    const pool = [{ id: 'a', sizeGB: 10 }];
+    expect(sumSize(pool, [])).toBe(0);
+  });
+});
+
+describe('exceedsAllTiers — 溢出判断', () => {
+  it('null 计算返回 false', () => {
+    expect(exceedsAllTiers(null)).toBe(false);
+  });
+
+  it('undefined 计算返回 false', () => {
+    expect(exceedsAllTiers(undefined)).toBe(false);
+  });
+
+  it('典型场景（远低于 2TB）返回 false', () => {
+    const result = calculateStorage({
+      capacityGB: 512,
+      systemId: 'macos',
+      selectedTools: ['vscode', 'nodejs'],
+      selectedAITools: ['cursor'],
+      selectedPlatforms: ['web'],
+      selectedEnvironments: [],
+      projectCounts: { web: 10 },
+    });
+    expect(exceedsAllTiers(result)).toBe(false);
+  });
+
+  it('边界：恰好等于阈值（1948 + 100 = 2048）返回 false', () => {
+    const result = calculateStorage({
+      capacityGB: 2048,
+      systemId: 'macos',
+      selectedTools: [],
+      selectedAITools: [],
+      selectedPlatforms: [],
+      selectedEnvironments: [],
+      projectCounts: {},
+    });
+    // totalUsed=175(75+100冗余), totalWithoutRedundancy=75
+    // 75 + 100 = 175 ≤ 2048 → false
+    expect(exceedsAllTiers(result)).toBe(false);
+  });
+
+  it('溢出：总占用（不含冗余）+100 > 2048 返回 true', () => {
+    const result = calculateStorage({
+      capacityGB: 2048,
+      systemId: 'macos', // 75
+      selectedTools: ['unreal'], // 120
+      selectedAITools: [],
+      selectedPlatforms: [],
+      selectedEnvironments: ['win-vm', 'dual-boot'], // 120 + 150 = 270
+      projectCounts: { gamedev: 50 }, // 35 × 50 = 1750
+    });
+    // totalUsed = 75 + 120 + 0 + 0 + 270 + 1750 + 100 = 2315
+    // totalWithoutRedundancy = 2315 - 100 = 2215
+    // 2215 + 100 = 2315 > 2048 → true
+    expect(exceedsAllTiers(result)).toBe(true);
+  });
+
+  it('极限全选：返回 true', () => {
+    const result = calculateStorage({
+      capacityGB: 2048,
+      systemId: 'windows',
+      selectedTools: [
+        'vscode', 'git', 'github-desktop',
+        'nodejs', 'python', 'rust',
+        'xcode', 'android-studio', 'wechat-devtools',
+        'figma', 'adobe-affinity',
+        'unreal', 'blender', 'davinci-resolve',
+      ],
+      selectedAITools: ['cursor', 'chatgpt', 'copilot', 'claude-code'],
+      selectedPlatforms: ['web', 'windows', 'macos', 'linux', 'ios', 'android', 'wechat-miniapp'],
+      selectedEnvironments: ['docker', 'win-vm', 'linux-vm', 'dual-boot'],
+      projectCounts: { web: 50, mobile: 50, desktop: 50, designer: 50, gamedev: 50, content: 50 },
+    });
+    // totalUsed = 4629, redundant = 100, totalWithoutRedundancy = 4529
+    // 4529 + 100 = 4629 > 2048 → true
+    expect(exceedsAllTiers(result)).toBe(true);
   });
 });

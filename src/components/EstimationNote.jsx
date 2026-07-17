@@ -51,6 +51,7 @@ export default function EstimationNote({ lang }) {
         <p style={noteTextStyle}>· {t['note.reserve']}</p>
         <p style={noteTextStyle}>· {t['note.privacy']}</p>
         <p style={noteTextStyle}>· {t['note.dataDate'].replace('{date}', '2026-07')}</p>
+        <p style={noteTextStyle}>· {t['note.dataSource']}</p>
       </div>
     </div>
   );

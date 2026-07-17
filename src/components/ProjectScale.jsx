@@ -20,38 +20,79 @@ function ScenarioRow({ lang, scenario, count, onChange }) {
     <div
       style={{
         display: 'flex',
-        alignItems: 'center',
-        gap: 'var(--space-md)',
-        flexWrap: 'wrap',
+        flexDirection: 'column',
+        gap: 'var(--space-sm)',
       }}
     >
-      {/* Scenario name */}
-      <span
+      {/* Row 1: name + perProject + count + subtotal */}
+      <div
         style={{
-          fontFamily: 'var(--font-sans)',
-          fontSize: '0.875rem',
-          fontWeight: 500,
-          color: 'var(--storage-text-primary)',
-          whiteSpace: 'nowrap',
-          minWidth: 80,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--space-sm)',
+          flexWrap: 'wrap',
         }}
       >
-        {name}
-      </span>
+        {/* Scenario name */}
+        <span
+          style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: '0.875rem',
+            fontWeight: 500,
+            color: 'var(--storage-text-primary)',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {name}
+        </span>
 
-      {/* Per-project size */}
-      <span
-        style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: 'var(--font-size-caption)',
-          color: 'var(--storage-text-tertiary)',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {t['config.perProject'].replace('{size}', sizePerProject)}
-      </span>
+        {/* Per-project size */}
+        <span
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--font-size-caption)',
+            color: 'var(--storage-text-tertiary)',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {t['config.perProject'].replace('{size}', sizePerProject)}
+        </span>
 
-      {/* Slider */}
+        {/* Spacer */}
+        <span style={{ flex: 1, minWidth: 0 }} />
+
+        {/* Count display — fixed width to prevent layout shift */}
+        <span
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--font-size-caption)',
+            fontWeight: 600,
+            color: 'var(--storage-text-primary)',
+            whiteSpace: 'nowrap',
+            minWidth: 36,
+            textAlign: 'right',
+          }}
+        >
+          {t['config.projectCount'].replace('{count}', count)}
+        </span>
+
+        {/* Subtotal — fixed minWidth to prevent layout shift from 2→3 digits */}
+        <span
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'var(--font-size-mono)',
+            fontWeight: 600,
+            color: 'var(--storage-primary)',
+            whiteSpace: 'nowrap',
+            minWidth: 52,
+            textAlign: 'right',
+          }}
+        >
+          {subtotal}GB
+        </span>
+      </div>
+
+      {/* Row 2: slider — full width for comfortable mobile operation */}
       <input
         type="range"
         min={1}
@@ -59,8 +100,7 @@ function ScenarioRow({ lang, scenario, count, onChange }) {
         value={count}
         onChange={(e) => onChange(Number(e.target.value))}
         style={{
-          flex: 1,
-          minWidth: 80,
+          width: '100%',
           height: 6,
           borderRadius: 3,
           appearance: 'none',
@@ -68,32 +108,6 @@ function ScenarioRow({ lang, scenario, count, onChange }) {
           background: `linear-gradient(to right, var(--storage-primary-action) 0%, var(--storage-primary-action) ${fillPct}%, var(--storage-bg-surface) ${fillPct}%, var(--storage-bg-surface) 100%)`,
         }}
       />
-
-      {/* Count display */}
-      <span
-        style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: 'var(--font-size-caption)',
-          fontWeight: 600,
-          color: 'var(--storage-text-primary)',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {t['config.projectCount'].replace('{count}', count)}
-      </span>
-
-      {/* Subtotal */}
-      <span
-        style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: 'var(--font-size-mono)',
-          fontWeight: 600,
-          color: 'var(--storage-primary)',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {subtotal}GB
-      </span>
     </div>
   );
 }

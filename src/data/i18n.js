@@ -116,6 +116,7 @@ export const i18n = {
     'result.breakdown.redundant': '冗余',
     'result.advice': '购买建议',
     'result.hint.larger': '推荐选择更大容量',
+    'result.hint.overflow': '当前配置超出所有可选容量，建议考虑 4TB 及以上',
     'result.recommended': '推荐',
     // 购买建议文案（按状态 + 变体）
     'result.advice.abundant.recommended': '{cap} 适合你的使用场景，存储空间充裕，可应对未来项目增长。',
@@ -125,6 +126,7 @@ export const i18n = {
     'result.advice.manageable.other': '{cap} 可以使用，但建议关注存储管理。',
     'result.advice.critical.recommend': '{cap} 剩余空间紧张，不建议作为当前配置。推荐选择 {rec}。',
     'result.advice.critical.other': '{cap} 剩余空间紧张，建议选择更大容量。',
+    'result.advice.overflow': '当前配置超出所有可选容量。建议考虑 4TB 或更大存储，或减少项目数量 / 工具选择。',
     // 操作
     'action.modifyScenario': '修改',
     'action.viewResults': '查看完整结果',
@@ -137,6 +139,7 @@ export const i18n = {
     'note.reserve': '建议保留 15%-20% 空闲空间',
     'note.privacy': '纯本地计算，不收集数据',
     'note.dataDate': '数据更新日期: {date}',
+    'note.dataSource': '详细数据来源与计算依据：GitHub 仓库 DATA_MODEL_ZH.md',
     'note.method': '估算方法',
     'note.method.fixed': '固定数据：操作系统安装大小、工具安装包大小',
     'note.method.empirical': '经验假设：工具缓存与依赖、项目文件大小（基于中位数估算）',
@@ -257,6 +260,7 @@ export const i18n = {
     'result.breakdown.redundant': 'Reserve',
     'result.advice': 'Purchase advice',
     'result.hint.larger': 'Consider a larger capacity',
+    'result.hint.overflow': 'Your setup exceeds all available options. Consider 4TB or larger',
     'result.recommended': 'Recommended',
     // 购买建议文案
     'result.advice.abundant.recommended': '{cap} fits your use case with ample space for future project growth.',
@@ -266,6 +270,7 @@ export const i18n = {
     'result.advice.manageable.other': '{cap} works, but keep an eye on storage usage.',
     'result.advice.critical.recommend': '{cap} is too tight for your setup. We recommend {rec}.',
     'result.advice.critical.other': '{cap} is too tight. Consider a larger capacity.',
+    'result.advice.overflow': 'Your setup exceeds all available storage options. Consider 4TB or larger, or reduce your project count / tool selection.',
     // 操作
     'action.modifyScenario': 'Edit',
     'action.viewResults': 'View full results',
@@ -278,6 +283,7 @@ export const i18n = {
     'note.reserve': 'Keep 15%–20% of your storage free for optimal performance.',
     'note.privacy': '100% local computation. No data collected.',
     'note.dataDate': 'Data updated: {date}',
+    'note.dataSource': 'Detailed data sources & methodology: DATA_MODEL_EN.md on GitHub',
     'note.method': 'Methodology',
     'note.method.fixed': 'Fixed data: OS installation size, tool package size',
     'note.method.empirical': 'Empirical assumptions: tool cache and dependencies, project file size (median-based estimate)',

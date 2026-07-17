@@ -43,8 +43,30 @@ function getRecommendedCapacity(totalUsedWithRedundancy) {
   return 2048;
 }
 
+/**
+ * getDefaultCapacity — 进入 S1 时的初始容量推荐
+ * 输入：不含冗余的总占用（GB）
+ * 输出：第一个满足"剩余 ≥ 20%"的容量档位
+ * 若所有档位都不够，返回最大值 2048
+ *
+ * 注意：此函数与 getRecommendedCapacity 的区别——
+ *      getRecommendedCapacity 用于 S3 结果页的 ★推荐标记，基于含冗余的总占用查表
+ *      getDefaultCapacity 用于 S1 进入时的初始容量选择，基于不含冗余的总占用动态遍历
+ */
+export function getDefaultCapacity(totalUsedWithoutRedundancy) {
+  for (const cap of CAPACITIES) {
+    const redundant = REDUNDANCY_MAP[cap] ?? 0;
+    const totalUsed = totalUsedWithoutRedundancy + redundant;
+    const remaining = cap - totalUsed;
+    if (cap > 0 && remaining / cap >= 0.2) {
+      return cap;
+    }
+  }
+  return 2048; // 所有档位都不够，返回最大值
+}
+
 // 工具函数：从资源池按 ID 数组求 sizeGB 之和
-function sumSize(pool, ids) {
+export function sumSize(pool, ids) {
   return ids.reduce((total, id) => {
     const item = pool.find((p) => p.id === id);
     return total + (item ? item.sizeGB : 0);
@@ -115,6 +137,18 @@ export function calculateStorage({
       redundant: redundantSize,
     },
   };
+}
+
+/**
+ * exceedsAllTiers — 判断总占用（不含冗余）是否超出所有容量档位
+ * 公式：(totalUsed - redundant + 100) > 2048
+ * +100 是 2TB 档位下的安全冗余，用于判断是否连 2TB 都不够
+ * 返回 true 时，应在 UI 提示"建议考虑 4TB 及以上"
+ */
+export function exceedsAllTiers(calculation) {
+  if (!calculation) return false;
+  const totalWithoutRedundancy = calculation.totalUsed - calculation.breakdown.redundant;
+  return (totalWithoutRedundancy + 100) > 2048;
 }
 
 export { CAPACITIES };

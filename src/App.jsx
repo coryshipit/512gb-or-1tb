@@ -19,9 +19,15 @@ import ProjectScale from './components/ProjectScale';
 import ResultCard from './components/ResultCard';
 import EstimationNote from './components/EstimationNote';
 import Footer from './components/Footer';
-import { calculateStorage } from './utils/calculateStorage';
+import { calculateStorage, getDefaultCapacity, sumSize, exceedsAllTiers } from './utils/calculateStorage';
 import { predictFromScenarios } from './utils/predictFromScenarios';
 import { i18n } from './data/i18n';
+import { systems } from './data/systems';
+import { tools } from './data/tools';
+import { aiTools } from './data/aiTools';
+import { platforms } from './data/platforms';
+import { environments } from './data/environments';
+import { scenarios } from './data/scenarios';
 
 // 页面状态
 const PAGE_STATE = {
@@ -131,12 +137,30 @@ export default function App() {
     setSelectedEnvironments(prediction.defaultEnvironments);
     setProjectCounts(prediction.projectCounts);
     setUserDeselectedTools(new Set());
+
+    // 差异化初始容量：根据预测结果计算合理的默认容量
+    const systemItem = systems.find((s) => s.id === prediction.recommendedOS);
+    const totalWithoutRedundancy =
+      (systemItem ? systemItem.baseSizeGB : 0) +
+      sumSize(tools, prediction.defaultTools) +
+      sumSize(aiTools, prediction.defaultAITools) +
+      sumSize(platforms, prediction.defaultPlatforms) +
+      sumSize(environments, prediction.defaultEnvironments) +
+      Object.entries(prediction.projectCounts).reduce((t, [sid, count]) => {
+        const sc = scenarios.find((s) => s.id === sid);
+        return t + (sc ? sc.projectSizeGB * count : 0);
+      }, 0);
+    setCapacityGB(getDefaultCapacity(totalWithoutRedundancy));
+
     setPageState(PAGE_STATE.S1);
+    // 切换页面状态后滚动回顶部，避免 S0 的滚动位置导致 S1 顶部内容被遮挡
+    window.scrollTo(0, 0);
   }, [selectedScenarios]);
 
   // S1: 返回 S0 修改场景
   const handleBackToS0 = useCallback(() => {
     setPageState(PAGE_STATE.S0);
+    window.scrollTo(0, 0);
   }, []);
 
   // S1: OS 切换 + 联动(iOS+Xcode 取消)
@@ -205,15 +229,18 @@ export default function App() {
   // S1 → S3: 查看完整结果
   const handleViewResults = useCallback(() => {
     setPageState(PAGE_STATE.S3);
+    window.scrollTo(0, 0);
   }, []);
 
   // S3 → S1: 返回调整
   const handleBackRefine = useCallback(() => {
     setPageState(PAGE_STATE.S1);
+    window.scrollTo(0, 0);
   }, []);
 
   // 容量紧张提示
   const showCapacityHint = calculation && calculation.status === 'critical';
+  const exceeds = exceedsAllTiers(calculation);
 
   // 分隔线样式
   const dividerStyle = {
@@ -284,6 +311,7 @@ export default function App() {
               recommendedCapacity={calculation?.recommendedCapacity}
               onChange={setCapacityGB}
               showHint={showCapacityHint}
+              exceedsAllTiers={exceeds}
             />
 
             <hr style={dividerStyle} />
