@@ -163,16 +163,48 @@ export default function App() {
     window.scrollTo(0, 0);
   }, []);
 
-  // S1: OS 切换 + 联动(iOS+Xcode 取消)
+  // S1: OS 切换 + 联动(iOS+Xcode 取消/恢复)
   const handleOSChange = useCallback((newOS) => {
-    // 如果当前场景含 iOS 且切到 Windows,自动取消 iOS + Xcode
-    if (newOS === 'windows' && selectedPlatforms.includes('ios')) {
+    // 切到非 macOS 且场景含 iOS → 自动取消 iOS + Xcode
+    if (newOS !== 'macos' && selectedPlatforms.includes('ios')) {
       setSelectedPlatforms((prev) => prev.filter((p) => p !== 'ios'));
       setSelectedTools((prev) => prev.filter((t) => t !== 'xcode'));
-      showToast(i18n[lang]['toast.osSwitch.windows']);
+      const toastKey = newOS === 'windows' ? 'toast.osSwitch.windows' : 'toast.osSwitch.linux';
+      showToast(i18n[lang][toastKey]);
     }
+
+    // 切到 macOS → 恢复被非 macOS 系统自动移除的 iOS + Xcode
+    if (newOS === 'macos') {
+      const scenarioDefaults = selectedScenarios.reduce(
+        (acc, sid) => {
+          const sc = scenarios.find((s) => s.id === sid);
+          if (sc) {
+            acc.platforms.push(...sc.defaultPlatforms);
+            acc.tools.push(...sc.defaultTools);
+          }
+          return acc;
+        },
+        { platforms: [], tools: [] },
+      );
+      const shouldHaveIOS = scenarioDefaults.platforms.includes('ios');
+      const shouldHaveXcode = scenarioDefaults.tools.includes('xcode');
+
+      const restoredIOS = shouldHaveIOS && !selectedPlatforms.includes('ios');
+      const restoredXcode = shouldHaveXcode && !selectedTools.includes('xcode') && !userDeselectedTools.has('xcode');
+
+      if (restoredIOS) {
+        setSelectedPlatforms((prev) => [...prev, 'ios']);
+      }
+      if (restoredXcode) {
+        setSelectedTools((prev) => [...prev, 'xcode']);
+      }
+      if (restoredIOS || restoredXcode) {
+        showToast(i18n[lang]['toast.osSwitch.macos']);
+      }
+    }
+
     setSystemId(newOS);
-  }, [selectedPlatforms, showToast, lang]);
+  }, [selectedScenarios, selectedPlatforms, selectedTools, userDeselectedTools, showToast, lang]);
 
   // S1: 工具多选/取消
   const handleToggleTool = useCallback((toolId) => {

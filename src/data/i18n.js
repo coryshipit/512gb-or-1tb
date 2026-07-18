@@ -133,6 +133,8 @@ export const i18n = {
     'action.backRefine': '返回调整',
     // Toast
     'toast.osSwitch.windows': '已切换到 Windows，iOS 平台和 Xcode 已移除（需要 macOS 构建 iOS 应用）',
+    'toast.osSwitch.linux': '已切换到 Linux，iOS 平台和 Xcode 已移除（需要 macOS 构建 iOS 应用）',
+    'toast.osSwitch.macos': '已切换回 macOS，iOS 平台和 Xcode 已恢复',
     // 估算说明
     'note.title': '估算说明',
     'note.disclaimer': '购买决策级别的估算，不是精确磁盘检测工具',
@@ -277,6 +279,8 @@ export const i18n = {
     'action.backRefine': 'Back to refine',
     // Toast
     'toast.osSwitch.windows': 'Switched to Windows. iOS platform and Xcode have been removed (macOS is required to build iOS apps).',
+    'toast.osSwitch.linux': 'Switched to Linux. iOS platform and Xcode have been removed (macOS is required to build iOS apps).',
+    'toast.osSwitch.macos': 'Switched back to macOS. iOS platform and Xcode have been restored.',
     // 估算说明
     'note.title': 'Estimation notes',
     'note.disclaimer': 'A purchase-level estimate — not a disk diagnostic tool.',
